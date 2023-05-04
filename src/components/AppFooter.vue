@@ -1,11 +1,12 @@
 <template lang="pug">
-  div Домашняя страница
-
+  div
+    v-footer(:fixed="true" app)
+      span Некий текст @
 </template>
 
 <script>
 export default {
-  name: "HomeView"
+  name: "AppFooter"
 }
 </script>
 

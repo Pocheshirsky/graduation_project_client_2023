@@ -1,11 +1,14 @@
 <template lang="pug">
-  div Домашняя страница
+  div
+    v-btn(:to="'./chat'") Некий пользователь
 
 </template>
 
 <script>
+
 export default {
-  name: "HomeView"
+  name: "MessengerView",
+
 }
 </script>
 

@@ -1,32 +1,44 @@
-<template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+<template lang="pug">
+  v-app
+    app-header
+    v-content
+      router-view
+    app-footer
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
-}
+import AppHeader from "@/components/AppHeader"
+import AppFooter from "@/components/AppFooter"
+import axios from "axios"
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+export default {
+  name: 'App',
+  components: {
+    AppHeader,
+    AppFooter
+  },
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+  data: () => ({
+    drawer: false,
+
+  }),
+
+  methods: {
+    addUser() {
+      axios
+          .post('http://localhost:8090/user', {firstName: this.firstName, lastName: this.lastName})
+          .then((data) => console.log('успех', data))
+    },
+    getAllUser() {
+      axios
+          .get('http://localhost:8090/user')
+          .then((data) => console.log('успех', data))
+    }
+  }
+};
+</script>
+
+<style scoped>
+
 </style>

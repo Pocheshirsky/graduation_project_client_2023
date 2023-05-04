@@ -1,11 +1,10 @@
 <template lang="pug">
-  div Домашняя страница
-
+  div Мой профиль
 </template>
 
 <script>
 export default {
-  name: "HomeView"
+  name: "ProfileView"
 }
 </script>
 

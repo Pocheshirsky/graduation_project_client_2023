@@ -1,11 +1,10 @@
 <template lang="pug">
-  div Домашняя страница
-
+  div Поиск знакомств
 </template>
 
 <script>
 export default {
-  name: "HomeView"
+  name: "SerchingView"
 }
 </script>
 
