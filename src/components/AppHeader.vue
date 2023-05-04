@@ -1,13 +1,4 @@
 <template lang="pug">
-  div
-    v-navigation-drawer(absolute temporary v-model="drawer" )
-      v-list
-        v-list-item(v-for="(item, i) in menuItems" :key="i")
-          v-list-item-action
-            v-icon {{item.icon}}
-          v-list-item-content
-            v-list-item-title(v-text="item.title")
-
     v-app-bar(app dark class="primary")
       v-app-bar-nav-icon(@click.stop="drawer = !drawer" class="hidden-md-and-up")
       router-link(:to="'/'" tag="span" style="cursor:pointer")
@@ -15,7 +6,7 @@
           <!-- <h3 class="text-h4 white--text">Название</h3> -->
           h3.text-h4.white--text Название
       v-spacer
-      v-app-bar-items(class="hidden-sm-and-down")
+      div(class="hidden-sm-and-down")
         v-btn(v-for="(item, i) in menuItems" :key="i" :to="item.route" text) {{item.title}}
           v-icon(right) {{item.icon}}
 

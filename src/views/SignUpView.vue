@@ -15,8 +15,8 @@
               v-spacer
               v-btn.mb-2(color="primary" rounded large @click.prevent="signUp") Далее
 </template>
-
 <script>
+import { mapActions, mapState} from 'vuex'
 export default {
   name: "SignUpView",
   data(){
@@ -26,9 +26,17 @@ export default {
       passwordRepeat: null
     }
   },
+  computed:{
+    ...mapState('user', ['user']),
+  },
   methods: {
+    ...mapActions('user', ['sign']),
+
     signUp(){
-      this.$store.dispatch('SIGNUP', {login: this.login, password: this.password})
+      this.sign({name:"123"})
+      console.log(this.user.name)
+      // console.log(this.$store.state.user.user.name);
+      
     }
   }
 }
