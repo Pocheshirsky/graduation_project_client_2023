@@ -30,10 +30,11 @@ export default {
     ...mapState('user', ['user']),
   },
   methods: {
-    ...mapActions('user', ['sign']),
+    ...mapActions('user', ['sign','getAllUsers']),
 
     signUp(){
       this.sign({name:"123"})
+      this.getAllUsers()
       console.log(this.user.name)
       // console.log(this.$store.state.user.user.name);
       

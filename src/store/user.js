@@ -1,4 +1,6 @@
 import axios from 'axios'
+import api from '@/plugins/Api'
+
 export default {
     namespaced: true,
 
@@ -18,6 +20,11 @@ export default {
             })
             .catch(()=>state.user = userInfo)
         },
+        getAllUsers(){
+            api.getAllUsers().then((data)=>{
+                console.log(data.data);
+            }) // as example
+        }
     }
   }
   
