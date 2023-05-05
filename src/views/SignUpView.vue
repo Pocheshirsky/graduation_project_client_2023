@@ -33,10 +33,10 @@ export default {
     ...mapActions('user', ['sign','getAllUsers']),
 
     signUp(){
-      this.sign({name:"123"})
+      // this.sign({username:"adminer"+Math.random(10)*10-10,password:"123"})
       this.getAllUsers()
-      console.log(this.user.name)
-      // console.log(this.$store.state.user.user.name);
+      // console.log(this.user.name)
+      // // console.log(this.$store.state.user.user.name);
       
     }
   }

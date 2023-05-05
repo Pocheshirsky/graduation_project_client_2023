@@ -18,17 +18,16 @@ export default {
         }
     },
     actions: {
-        sign({state},userInfo){
-            axios.post(userInfo).then((data)=>{
-                state.user = data.data
+        sign(prop, userInfo) {
+            api.signup(userInfo).then((data) => {
+                console.log("123",data);
             })
-            .catch(()=>state.user = userInfo)
+            // .catch(()=>state.user = userInfo)
         },
-        getAllUsers(){
-            api.getAllUsers().then((data)=>{
+        getAllUsers() {
+            api.getAllUsers().then((data) => {
                 console.log(data.data);
             }) // as example
         }
     }
-  }
-  
+}
