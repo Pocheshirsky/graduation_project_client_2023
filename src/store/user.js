@@ -1,4 +1,4 @@
-import axios from 'axios'
+
 import api from '@/plugins/Api'
 
 export default {
