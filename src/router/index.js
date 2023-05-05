@@ -9,6 +9,7 @@ import SignUpView from "@/views/SignUpView.vue";
 import DevPanelView from "@/views/DevPanelView";
 import MessengerView from "@/views/MessengerView";
 import ChatView from "@/views/ChatView";
+import StartTestingView from "@/views/StartTestingView";
 
 
 Vue.use(VueRouter)
@@ -23,6 +24,11 @@ const routes = [
     path: '/searching',
     name: 'searching',
     component: SearchingView
+  },
+  {
+    path: '/start_testing',
+    name: 'StartTesting',
+    component: StartTestingView
   },
   {
     path: '/testing',

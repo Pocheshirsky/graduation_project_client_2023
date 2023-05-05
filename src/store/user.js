@@ -7,11 +7,15 @@ export default {
     state: {
       user:{
         name:"hne"
-      }
+      },
+        userAnswersArray: []
     },
     getters: {
     },
     mutations: {
+        setUserAnswers({state},answersArray){
+            state.userAnswersArray = answersArray
+        }
     },
     actions: {
         sign({state},userInfo){

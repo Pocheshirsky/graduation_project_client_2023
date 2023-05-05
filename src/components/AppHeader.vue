@@ -1,12 +1,12 @@
 <template lang="pug">
     v-app-bar(app dark class="primary")
-      v-app-bar-nav-icon(@click.stop="drawer = !drawer" class="hidden-md-and-up")
+      v-app-bar-nav-icon.hidden-md-and-up(@click.stop="drawer = !drawer" )
       router-link(:to="'/'" tag="span" style="cursor:pointer")
         v-app-bar-title
           <!-- <h3 class="text-h4 white--text">Название</h3> -->
           h3.text-h4.white--text Название
       v-spacer
-      div(class="hidden-sm-and-down")
+      div.hidden-sm-and-down
         v-btn(v-for="(item, i) in menuItems" :key="i" :to="item.route" text) {{item.title}}
           v-icon(right) {{item.icon}}
 
@@ -36,7 +36,7 @@ export default {
         {
           icon: 'mdi-puzzle',
           title: 'Пройти тестирование',
-          route: '/testing',
+          route: '/start_testing',
         },
         {
           icon: 'mdi-account-circle',
