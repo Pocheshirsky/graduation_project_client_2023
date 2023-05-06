@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const instance = axios.create({
     baseURL: "http://localhost:8090"
 })
@@ -19,8 +18,9 @@ instance.interceptors.request.use(config => {
 
 
 
-const signup = (userInfo) => instance.post("/api/auth/signup", userInfo).then(data => {
-    console.log(data.data);
+const signUp = (userInfo) => instance.post("/api/auth/signup", userInfo).then(data => {
+    // localStorage.removeItem('accessToken')
+    // localStorage.removeItem('refreshToken')
     localStorage.setItem("accessToken", data.data.accessToken)
     localStorage.setItem("refreshToken", data.data.refreshToken)
     return data.data
@@ -30,7 +30,13 @@ const getAllUsers = () => instance.get("/api/user/all")
 
 const getUser = (userUUID) => instance.get("/user/" + userUUID)
 
-const login = (userInfo) => instance.post("/api/auth/login", userInfo)
+const signIn = (userInfo) => instance.post("/api/auth/login", userInfo).then(data => {
+    // localStorage.removeItem('accessToken')
+    // localStorage.removeItem('refreshToken')
+    localStorage.setItem("accessToken", data.data.accessToken)
+    localStorage.setItem("refreshToken", data.data.refreshToken)
+    return data.data
+})
 
 // function getHeaders() {
 //     console.log("sdsd");
@@ -50,7 +56,7 @@ const login = (userInfo) => instance.post("/api/auth/login", userInfo)
 export default {
     getAllUsers,
     getUser,
-    signup,
-    login,
+    signUp,
+    signIn,
 
 }

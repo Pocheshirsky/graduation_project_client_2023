@@ -7,23 +7,38 @@
             v-toolbar-title Авторизация
           v-card-text
             v-form
-              v-text-field(prepend-icon="mdi-account" name="login" label="Логин" type="text" required)
-              v-text-field(id="password" prepend-icon="mdi-lock" name="password" label="Пароль" type="password" required)
+              v-text-field(prepend-icon="mdi-account" label="Логин" type="text" required v-model="login")
+              v-text-field(prepend-icon="mdi-lock" label="Пароль" type="password" required v-model="password")
           v-card-action
             div(justify="center" align="center")
               v-spacer
-              v-btn.mb-2(color="primary" rounded large) Войти
+              v-btn.mb-2(color="primary" rounded large @click="loginUser") Войти
             div.pb-4.pt-2(justify="center" align="center")
               v-btn(align="center" justify="center" color="primary" rounded :to="'/signup'") Впервые здесь?
+            div(v-if="user.length") {{user}}
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+
 export default {
   name: "LogInView",
-  data(){
+  data() {
     return {
-      login: null,
-      password: null,
+      login: '',
+      password: '',
+    }
+  },
+  computed: {
+    ...mapState('user', ['user'])
+
+  },
+  methods: {
+    ...mapActions('user', ['signIn', 'getAllUsers']),
+
+    loginUser() {
+      this.signIn({username: this.login, password: this.password})
+
     }
   }
 }

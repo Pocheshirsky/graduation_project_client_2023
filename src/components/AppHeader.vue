@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "AppHeader",
   data(){
@@ -21,6 +22,8 @@ export default {
     }
   },
   computed:{
+    ...mapState('user', ['user']),
+
     menuItems(){
       return [
         {

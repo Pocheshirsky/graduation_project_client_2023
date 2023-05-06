@@ -3,7 +3,6 @@
     app-header
     v-content
       router-view
-    app-footer
 </template>
 
 <script>

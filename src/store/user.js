@@ -4,21 +4,33 @@ export default {
     namespaced: true,
 
     state: {
-      user:{
-        name:"hne"
+      user: {
+
       },
-        userAnswersArray: []
+      userAnswersArray: [],
+      userTestingResult: []
     },
     getters: {
     },
     mutations: {
-        setUserAnswers({state},answersArray){
-            state.userAnswersArray = answersArray
+        setUserAnswers(state, userAnswers) {
+            state.userAnswersArray = userAnswers
+        },
+        setTestingResult(state, result){
+            state.userTestingResult = result
         }
     },
     actions: {
-        sign(prop, userInfo) {
-            api.signup(userInfo).then((data) => {
+        signIn({state}, userInfo) {
+            api.signIn(userInfo).then((data) => {
+                state.user = data.userId;
+                console.log("123",data);
+            })
+            // .catch(()=>state.user = userInfo)
+        },
+        signUp({state}, userInfo) {
+            api.signUp(userInfo).then((data) => {
+                state.user = data.userId;
                 console.log("123",data);
             })
             // .catch(()=>state.user = userInfo)

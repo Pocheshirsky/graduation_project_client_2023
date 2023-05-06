@@ -10,6 +10,7 @@ import DevPanelView from "@/views/DevPanelView";
 import MessengerView from "@/views/MessengerView";
 import ChatView from "@/views/ChatView";
 import StartTestingView from "@/views/StartTestingView";
+import TestingResultView from "@/views/TestingResultView";
 
 
 Vue.use(VueRouter)
@@ -34,6 +35,11 @@ const routes = [
     path: '/testing',
     name: 'testing',
     component: TestingView
+  },
+  {
+    path: '/testing_result',
+    name: 'testingResult',
+    component: TestingResultView
   },
   {
     path: '/profile',
