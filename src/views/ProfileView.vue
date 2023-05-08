@@ -1,54 +1,76 @@
 <template lang="pug">
-  v-container(style="width: 35%")
-    v-row.elevation-12.align-end.mb-6.mt-6(no-gutters)
-      v-col(cols="4")
+  v-container(style="width: 40%")
+    v-row.elevation-12.align-end.mb-4.mt-6(no-gutters)
+      v-col(cols="3")
         v-avatar.ma-4(size="100")
-          img.primary(:src="'/avatars/avatar_' + (userForm.avatar.toLowerCase()) + '.png'")
-      v-col(cols="8")
+          img.primary
+      v-col(cols="7")
         p.ml-2 Псевдоним
           span.ml-7.text--primary(v-model="userForm.login") {{userForm.login}}
-
-    v-row.align-center.elevation-12.mb-6.mt-6(no-gutters)
-      v-col(cols="6")
-        p.ma-4.mt-6.text-right Имя
-        p.ma-4.text-right Фамилия
-        p.ma-4.text-right Пол
-        p.ma-4.text-right Возраст
-        p.ma-4.text-right Город
-        p.ma-4.text-right Рост
-        p.ma-4.text-right Интересующий рост
-        p.ma-4.text-right Интересы
-        p.ma-4.text-right Взгляды на семью
-        p.ma-4.text-right Религия
-        p.ma-4.text-right Важность религии в паре
-      v-col(cols="6")
-        v-text-field.mt-7(v-model="userForm.lastName" dense style="max-height: 42px;" type="text") {{userForm.firstName}}
-        v-text-field(v-model="userForm.lastName" dense style="max-height: 42px;" type="text") {{userForm.lastName}}
-        v-select(outlined dense style="max-height: 42px;")
-        v-text-field(dense type="number" style="max-height: 42px;")
-        v-select(outlined dense style="max-height: 42px;")
-        v-text-field(dense type="number" style="max-height: 42px;")
-        v-text-field(dense type="number" style="max-height: 42px;")
-        p.ma-4 текст
-        v-select(outlined dense style="max-height: 42px;")
-        v-select(outlined dense style="max-height: 42px;")
-        v-select(outlined dense style="max-height: 42px;")
+    v-container.elevation-12
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Имя
+        v-text-field.ml-4(v-model="userForm.firstName" dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Фамилия
+        v-text-field.ml-4(v-model="userForm.lastName" dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Пол
+        v-select.ml-4(v-model="userForm.gender" outlined dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Возраст
+        v-text-field.ml-4(v-model="userForm.userAge" dense type="number" style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Город
+        v-select.ml-4(v-model="userForm.locality" outlined dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Рост
+        v-text-field.ml-4(v-model="userForm.growth" dense type="number" style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Интересующий рост
+        v-text-field.ml-4(v-model="userForm.interestedGrowth" dense type="number" style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Интересы
+        p.ml-4.mt-3(v-model="userForm.interests.interest") Интерес 1, интерес 2
+        v-btn.ml-4(icon outlined color="primary")
+          v-icon mdi-pencil
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Взгляд на семью
+        v-select.ml-4(v-model="userForm.familyView" outlined dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Религия
+        v-select.ml-4(v-model="userForm.religion" outlined dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 30%") Важность религии в паре
+        v-select.ml-4(v-model="userForm.religionImportance" outlined dense style="max-height: 42px;")
 
       div.justify-center(align="center")
-        v-btn.ma-4(color="primary" @click.native="updateProfile") Изменить профиль
+        v-btn.ma-4(color="primary" @click.native="updateProfile") Сохранить изменения
 </template>
 
 <script>
 export default {
-  pageTitle: 'My Profile',
+  name: 'profile_view',
   data () {
     return {
       loading: false,
       userForm: {
+        login: 'admin',
         firstName: 'admin',
         lastName: 'admin',
-        login: 'admin',
-        avatar: 'MALE_CAUCASIAN_BLOND_BEARD'
+        gender: 'male',
+        userAge: 25,
+        locality: 'Izhevsk',
+        growth: 165,
+        interestedGrowth: 170,
+        interests: [
+          { interest: 'music' },
+          { interest: 'art' },
+          { interest: 'games' }
+        ],
+        familyView: 'in_the_near_future',
+        religion: 'orthodoxy',
+        religionImportance: 'important'
       },
     }
   },
@@ -59,3 +81,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>
