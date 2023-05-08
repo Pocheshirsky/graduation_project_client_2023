@@ -15,8 +15,10 @@
         p.text-right.mt-3(style="width: 30%") Фамилия
         v-text-field.ml-4(v-model="userForm.lastName" dense style="max-height: 42px;")
       div.d-flex
-        p.text-right.mt-3(style="width: 30%") Пол
-        v-select.ml-4(v-model="userForm.gender" outlined dense style="max-height: 42px;")
+        p.text-right.mt-5(style="width: 30%") Пол
+        v-radio-group.ml-4(row v-model="userForm.gender" style="max-height: 30px;")
+          v-radio(value="male" label="Мужской")
+          v-radio(value="female" label="Женский")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Возраст
         v-text-field.ml-4(v-model="userForm.userAge" dense type="number" style="max-height: 42px;")
