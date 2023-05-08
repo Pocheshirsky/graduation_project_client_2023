@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from "@/views/HomeView.vue";
+import HomeView from "@/views/GetStartedView.vue";
 import SearchingView from "@/views/SearchingView.vue";
 import TestingView from "@/views/TestingView.vue";
 import ProfileView from "@/views/ProfileView.vue";
@@ -11,6 +11,8 @@ import MessengerView from "@/views/MessengerView";
 import ChatView from "@/views/ChatView";
 import StartTestingView from "@/views/StartTestingView";
 import TestingResultView from "@/views/TestingResultView";
+import GetStartedView from "@/views/GetStartedView";
+import MainView from "@/views/MainView";
 
 
 Vue.use(VueRouter)
@@ -18,8 +20,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'getStarted',
+    component: GetStartedView
   },
   {
     path: '/searching',
@@ -75,7 +77,12 @@ const routes = [
     path: '/chat',
     name: 'chat',
     component: ChatView
-  }
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: MainView
+  },
 ]
 
 const router = new VueRouter({

@@ -1,9 +1,9 @@
 <template lang="pug">
-  v-container.elevation-2
+  v-container.elevation-2(style = "width: 50%")
     v-container.fill-height(class="chat" ref="chat")
       v-row.fill-height(align="end")
         v-col
-          div(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from == 'user' ? 'justify-end': null]")
+          div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from == 'user' ? 'justify-end': null]")
             span(v-if="item.from == 'user'" class="blue--text mr-3") {{ item.msg }}
             v-avatar( :color="item.from == 'user' ? 'indigo': 'red'" size="36")
               span.white--text {{ item.from[0] }}
