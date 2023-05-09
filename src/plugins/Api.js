@@ -37,6 +37,7 @@ const signIn = (userInfo) => instance.post("/api/auth/login", userInfo).then(dat
     localStorage.setItem("refreshToken", data.data.refreshToken)
     return data.data
 })
+const updateUserInfo = (userInfo) => instance.post("/api/user/updateUserInfo", userInfo).then(data => data.data)
 
 // function getHeaders() {
 //     console.log("sdsd");
@@ -58,5 +59,5 @@ export default {
     getUser,
     signUp,
     signIn,
-
+    updateUserInfo
 }

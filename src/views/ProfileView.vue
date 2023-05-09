@@ -1,13 +1,12 @@
 <template lang="pug">
   v-container(style="width: 40%")
-    v-row.elevation-12.align-end.mb-4.mt-6(no-gutters)
+    v-row.elevation-6.align-end.mb-4.mt-6(no-gutters)
       v-col(cols="3")
         v-avatar.ma-4(size="100")
           img.primary
       v-col(cols="7")
-        p.ml-2 Псевдоним
-          span.ml-7.text--primary(v-model="userForm.login") {{userForm.login}}
-    v-container.elevation-12
+        p.ml-7.text--primary.text-h4(v-model="userForm.login" ) {{userForm.login}}
+    v-container.elevation-6
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Имя
         v-text-field.ml-4(v-model="userForm.firstName" dense style="max-height: 42px;")
@@ -24,7 +23,7 @@
         v-text-field.ml-4(v-model="userForm.userAge" dense type="number" style="max-height: 42px;")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Город
-        v-select.ml-4(v-model="userForm.locality" outlined dense style="max-height: 42px;")
+        v-select.ml-4(v-model="userForm.locality" outlined dense style="max-height: 42px;" :items="localityComp" item-value="name" item-text="title")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Рост
         v-text-field.ml-4(v-model="userForm.growth" dense type="number" style="max-height: 42px;")
@@ -33,24 +32,24 @@
         v-text-field.ml-4(v-model="userForm.interestedGrowth" dense type="number" style="max-height: 42px;")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Интересы
-        p.ml-4.mt-3(v-model="userForm.interests.interest") Интерес 1, интерес 2
-        v-btn.ml-4(icon outlined color="primary")
-          v-icon mdi-pencil
+        v-select.ml-4(v-model="userForm.interests" multiple outlined dense style="max-height: 42px;" :items="interestsComp" item-value="name" item-text="title")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Взгляд на семью
-        v-select.ml-4(v-model="userForm.familyView" outlined dense style="max-height: 42px;")
+        v-select.ml-4(v-model="userForm.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Религия
-        v-select.ml-4(v-model="userForm.religion" outlined dense style="max-height: 42px;")
+        v-select.ml-4(v-model="userForm.religion" outlined dense style="max-height: 42px;" :items="religionComp" item-value="name" item-text="title")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Важность религии в паре
-        v-select.ml-4(v-model="userForm.religionImportance" outlined dense style="max-height: 42px;")
+        v-select.ml-4(v-model="userForm.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
 
       div.justify-center(align="center")
         v-btn.ma-4(color="primary" @click.native="updateProfile") Сохранить изменения
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: 'profile_view',
   data () {
@@ -58,28 +57,66 @@ export default {
       loading: false,
       userForm: {
         login: 'admin',
-        firstName: 'admin',
-        lastName: 'admin',
-        gender: 'male',
-        userAge: 25,
-        locality: 'Izhevsk',
-        growth: 165,
-        interestedGrowth: 170,
-        interests: [
-          { interest: 'music' },
-          { interest: 'art' },
-          { interest: 'games' }
-        ],
-        familyView: 'in_the_near_future',
-        religion: 'orthodoxy',
-        religionImportance: 'important'
+        firstName: '',
+        lastName: '',
+        gender: '',
+        userAge: null,
+        locality: '',
+        growth: null,
+        interestedGrowth: null,
+        interests: [],
+        familyView: '',
+        religion: '',
+        religionImportance: ''
       },
+      interestsComp: [
+        { name: 'music', title: 'Музыка' },
+        { name: 'art', title: 'Искусство' },
+        { name: 'cinematic', title: 'Кино' },
+        { name: 'books', title: 'Книги' },
+        { name: 'games', title: 'Игры' },
+      ],
+      localityComp: [
+        { name: 'izhevsk', title: 'Ижевск' },
+        { name: 'moscow', title: 'Москва' },
+        { name: 'saint-petersburg', title: 'Санкт-Петербург' },
+      ],
+      familyViewComp: [
+        { name: 'child_free', title: 'Без детей' },
+        { name: 'child_in_far_future', title: 'В будущем' },
+        { name: 'child_in_near_future', title: 'В ближайшей перспективе' },
+      ],
+      religionComp: [
+        { name: 'orthodoxy', title: 'Православие' },
+        { name: 'catholicism', title: 'Католицизм' },
+        { name: 'protestantism', title: 'Протестантизм' },
+        { name: 'judaism', title: 'Иудаизм' },
+        { name: 'buddhism', title: 'Буддизм' },
+        { name: 'islam', title: 'Ислам' },
+        { name: 'hinduism', title: 'Индуизм' },
+        { name: 'atheism', title: 'Атеизм' },
+        { name: 'agnosticism', title: 'Агностицизм' },
+      ],
+      religionImportanceComp: [
+        { name: 'important', title: 'Важно' },
+        { name: 'not_important', title: 'Не важно' },
+      ],
     }
   },
-  methods: {
-    updateProfile(){
 
+  mounted() {
+    this.getUserInfo()
+  },
+
+  methods: {
+    ...mapActions('user', ['updateUserInfo']),
+    updateProfile(){
+      this.updateUserInfo(this.userForm)
     }
+  },
+
+  computed: {
+
   }
 }
 </script>

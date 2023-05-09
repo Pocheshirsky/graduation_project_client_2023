@@ -29,16 +29,15 @@ export default {
       password: '',
     }
   },
+
   computed: {
     ...mapState('user', ['user'])
-
   },
+
   methods: {
     ...mapActions('user', ['signIn', 'getAllUsers']),
-
     loginUser() {
       this.signIn({username: this.login, password: this.password})
-
     }
   }
 }

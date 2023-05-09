@@ -39,6 +39,11 @@ export default {
             api.getAllUsers().then((data) => {
                 console.log(data.data);
             }) // as example
+        },
+        updateUserInfo({state}, userInfo){
+            api.updateUserInfo(userInfo).then((data) => {
+                state.user=data;
+            })
         }
     }
 }

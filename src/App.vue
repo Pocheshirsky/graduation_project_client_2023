@@ -6,10 +6,9 @@
 </template>
 
 <script>
-
 import AppHeader from "@/components/AppHeader"
 import AppFooter from "@/components/AppFooter"
-import axios from "axios"
+import {mapActions} from 'vuex'
 
 export default {
   name: 'App',
@@ -23,21 +22,19 @@ export default {
 
   }),
 
+  mounted() {
+    this.loginUser()
+  },
+
   methods: {
-    addUser() {
-      axios
-          .post('http://localhost:8090/user', {firstName: this.firstName, lastName: this.lastName})
-          .then((data) => console.log('успех', data))
-    },
-    getAllUser() {
-      axios
-          .get('http://localhost:8090/user')
-          .then((data) => console.log('успех', data))
+    ...mapActions('user', ['signIn', 'getAllUsers']),
+    loginUser() {
+      this.signIn({username: 'admin', password: '123'})
     }
   }
 };
 </script>
 
-<style scoped>
+<style>
 
 </style>
