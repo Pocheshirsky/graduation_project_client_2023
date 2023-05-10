@@ -83,9 +83,9 @@ function setUpdateTimer(response) {
     let token = parseJwt(response.data.refreshToken)
     /* время жизни токена - текущее время - задежка,
      чтоб запросить новый refreshToken перед тем, как он умрет (лучше потом 5 минут поставить т.е. 50000) */
-    let updateTimeMs = new Date(token.exp * 1000) - new Date() - 4000 
-
-    timerId = setTimeout(() => getNewRefreshToken(), updateTimeMs)
+    let updateTimeMs = new Date(token.exp * 1000) - new Date() - 10_0000
+    if (updateTimeMs / 8.64e7 < 1)// мс в дни
+        timerId = setTimeout(() => getNewRefreshToken(), updateTimeMs)// задержка больше 2147483647 == 1 NOT GOOD
 
 }
 
