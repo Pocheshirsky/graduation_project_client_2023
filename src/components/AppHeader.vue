@@ -7,19 +7,19 @@
           h3.text-h4.white--text Название
       v-spacer
       div.hidden-sm-and-down
-        v-btn(v-if="user.length" text :to="'/messenger'") Чаты
+        v-btn(v-if="true" text :to="'/messenger'") Чаты
           v-icon(right) mdi-message-text
-        v-btn(v-if="user.length" text :to="'/searching'") Найти знакомство
+        v-btn(v-if="true" text :to="'/searching'") Найти знакомство
           v-icon(right) mdi-eye
-        v-btn(v-if="user.length" text :to="'/start_testing'") Пройти тестирование
+        v-btn(v-if="true" text :to="'/start_testing'") Пройти тестирование
           v-icon(right) mdi-puzzle
-        v-btn(v-if="user.length" text :to="'/profile'") Мой профиль
+        v-btn(v-if="true" text :to="'/profile'") Мой профиль
           v-icon(right) mdi-account-circle
-        v-btn(v-if="user.length" text :to="'/'" @click="logout") Выйти
+        v-btn(v-if="true" text :to="'/'" @click="logout") Выйти
           v-icon(right) mdi-logout-variant
-        v-btn(text :to="'/login'") Войти
+        v-btn(v-if="false" text :to="'/login'") Войти
           v-icon(right) mdi-login-variant
-        v-btn(text :to="'/devpanel'") Панель разработчика
+        v-btn(v-if="false" text :to="'/devpanel'") Панель разработчика
           v-icon(right) mdi-wrench
 </template>
 

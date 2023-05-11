@@ -28,9 +28,9 @@ export default {
 
   methods: {
     ...mapActions('user', ['signIn', 'getAllUsers']),
-    loginUser() {
-      this.signIn({username: 'admin', password: '123'})
-    }
+    //loginUser() {
+    //  this.signIn({username: 'admin', password: '123'})
+    //}
   }
 };
 </script>

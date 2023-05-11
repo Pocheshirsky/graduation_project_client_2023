@@ -1,10 +1,16 @@
 <template lang="pug">
   v-container.elevation-2(style = "width: 50%")
+    v-row.elevation-6.align-end.mb-4.mt-6(no-gutters)
+      v-col(cols="2")
+        v-avatar.ma-4(size="85")
+          img.primary
+      v-col(cols="8")
+        p.ml-7.primary--text.text-h3(v-model="login" ) {{login}}
     v-container.fill-height(class="chat" ref="chat")
       v-row.fill-height(align="end")
         v-col
           div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from == 'user' ? 'justify-end': null]")
-            span(v-if="item.from == 'user'" class="blue--text mr-3") {{ item.msg }}
+            span(v-if="item.from == 'user'" class="primary--text mr-3") {{ item.msg }}
             v-avatar( :color="item.from == 'user' ? 'indigo': 'red'" size="36")
               span.white--text {{ item.from[0] }}
             span.blue--text.ml-3(v-if="item.from != 'user'") {{ item.msg }}
@@ -15,7 +21,7 @@
           div.d-flex.flex-row.align-center
             v-text-field(v-model="msg" placeholder="Type Something" @keypress.enter="send")
             v-btn.ml-4(icon @click="send")
-              v-icon mdi-send
+              v-icon(color="primary") mdi-send
 </template>
 
 <script>
@@ -26,7 +32,8 @@ export default {
     return {
       chat: [
       ],
-      msg:""
+      msg:"",
+      login: 'Другой пользователь',
     }
   },
   methods: {
@@ -51,7 +58,7 @@ export default {
     addReply(){
       this.chat.push({
         from: "sushant",
-        msg: "Hmm"
+        msg: "Ответ пользователя"
       })
       this.$nextTick(()=>this.scrollToElement())
       
@@ -62,7 +69,7 @@ export default {
 
 <style scoped>
 .chat{
-  height: 80vh;
+  height: 60vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }

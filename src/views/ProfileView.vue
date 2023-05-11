@@ -28,20 +28,11 @@
         p.text-right.mt-3(style="width: 30%") Рост
         v-text-field.ml-4(v-model="userForm.growth" dense type="number" style="max-height: 42px;")
       div.d-flex
-        p.text-right.mt-3(style="width: 30%") Интересующий рост
-        v-text-field.ml-4(v-model="userForm.interestedGrowth" dense type="number" style="max-height: 42px;")
-      div.d-flex
         p.text-right.mt-3(style="width: 30%") Интересы
         v-select.ml-4(v-model="userForm.interests" multiple outlined dense style="max-height: 42px;" :items="interestsComp" item-value="name" item-text="title")
       div.d-flex
-        p.text-right.mt-3(style="width: 30%") Взгляд на семью
-        v-select.ml-4(v-model="userForm.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
-      div.d-flex
         p.text-right.mt-3(style="width: 30%") Религия
         v-select.ml-4(v-model="userForm.religion" outlined dense style="max-height: 42px;" :items="religionComp" item-value="name" item-text="title")
-      div.d-flex
-        p.text-right.mt-3(style="width: 30%") Важность религии в паре
-        v-select.ml-4(v-model="userForm.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
 
       div.justify-center(align="center")
         v-btn.ma-4(color="primary" @click.native="updateProfile") Сохранить изменения
@@ -97,10 +88,7 @@ export default {
         { name: 'atheism', title: 'Атеизм' },
         { name: 'agnosticism', title: 'Агностицизм' },
       ],
-      religionImportanceComp: [
-        { name: 'important', title: 'Важно' },
-        { name: 'not_important', title: 'Не важно' },
-      ],
+
     }
   },
 

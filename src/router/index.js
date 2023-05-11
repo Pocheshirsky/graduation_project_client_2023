@@ -13,6 +13,7 @@ import StartTestingView from "@/views/StartTestingView";
 import TestingResultView from "@/views/TestingResultView";
 import GetStartedView from "@/views/GetStartedView";
 import MainView from "@/views/MainView";
+import SearchingConfigurationView from "@/views/SearchingConfigurationView";
 
 
 Vue.use(VueRouter)
@@ -27,6 +28,11 @@ const routes = [
     path: '/searching',
     name: 'searching',
     component: SearchingView
+  },
+  {
+    path: '/searching_configuration',
+    name: 'searchingConfiguration',
+    component: SearchingConfigurationView
   },
   {
     path: '/start_testing',

@@ -60,7 +60,7 @@ export default {
     ...mapMutations('user', ['setTestingResult']),
     finishForm(){
       this.setTestingResult(this.testingResult)
-      this.$router.push('/')
+      this.$router.push('/main')
     },
 
     characterTypesTitles(){

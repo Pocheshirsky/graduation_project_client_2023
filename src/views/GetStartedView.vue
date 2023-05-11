@@ -1,11 +1,12 @@
 <template lang="pug">
-  v-container
-    div.text-center
-      p.text-h2.primary--text() Название
-      p.text-h4.primary--text() Описание 1
-      p.text-h4.primary--text() Описание 2
-      p.text-h4.primary--text() Описание 3
-      v-btn(large rounded color="primary" :to="'/login'") Начать
+  v-container(fill-height)
+    v-row.justify-center.align-center
+      v-col(cols="12" sm="5")
+        div.text-center
+          p.text-h2.primary--text Система поиска новых знакомств
+          p.text-h5.primary--text Доступная, удобная и результативная платформа для поиска новых знакомств
+          p.text-h6.primary--text С помощью использования широкого спектра данных вы сможете найти человека, который устраивал бы вас во всём
+          v-btn(large rounded color="primary" :to="'/login'") Начать
 
 
 </template>

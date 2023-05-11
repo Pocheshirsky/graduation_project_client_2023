@@ -1,41 +1,87 @@
 <template lang="pug">
   div 
-    v-btn(color="primary" @click="showPanel('create')") Создать
-    v-btn.ml-4(color="primary" @click="showPanel('showAllUsers')") Список всех пользователей
+    v-btn.ma-4(color="primary" @click="showPanel('createUser')") Создать нового пользователя
+    v-btn.ma-4(color="primary" @click="showPanel('showAllUsers')") Список всех пользователей
+    v-btn.ma-4(color="primary" @click="showPanel('createChat')") Создать чат для пользователей
     
     div.mt-4.ml-10(v-if="createNewUser") Создание нового пользователя
       div.d-flex
-        div
-          v-text-field(v-model="userform.login" name="login" label="Логин" type="text" :rules="['required']" )
-          v-text-field(v-model="userform.password" name="password" label="Пароль" type="text" :rules="['required']" )
-          v-text-field(label="Имя" type="text" v-model="firstName")
-          v-text-field(label="Фамилия" type="text" v-model="lastName")
-          v-text-field(label="Пол" type="text" v-model="gender")
-          v-text-field(label="Возраст" type="number" v-model="age")
-          v-text-field(label="Город" type="text" v-model="city")
-          v-text-field(label="Рост" type="number" v-model="growth")
-          v-text-field(label="Интересующий рост" type="number" v-model="interestGrowth")
-          v-text-field(label="Цель поиска" type="text" v-model="searchPurpose")
-          v-text-field(label="Интересы" type="text" v-model="interests")
-        div.ml-5 
-          v-text-field(label="Интересующие черты характера" type="text" v-model="interestingCharacterTraits")
-          v-text-field(label="Взгляды на семью" type="text" v-model="familyViews")
-          v-text-field(label="Религия" type="text" v-model="religion")
-          v-text-field(label="Важность религии в паре" type="text" v-model="religionImportance")
-          v-text-field(label="Параноик" type="number" v-model="paranoid")
-          v-text-field(label="Эпилептоид" type="number" v-model="epileptoid")
-          v-text-field(label="Гипертим" type="number" v-model="hypertime")
-          v-text-field(label="Истероид" type="number" v-model="hysteroid")
-          v-text-field(label="Шизоид" type="number" v-model="schizoid")
-          v-text-field(label="Психастеноид" type="number" v-model="psychasthenoid")
-          v-text-field(label="Сенситив" type="number" v-model="sensitive")
-          v-text-field(label="Гипотим" type="number" v-model="hypothim")
-          v-text-field(label="Конформный тип" type="number" v-model="conformalType")
-          v-text-field(label="Неустойчивый тип" type="number" v-model="unstableType")
-          v-text-field(label="Астеник" type="number" v-model="asthenic")
-          v-text-field(label="Лабильный тип" type="number" v-model="labileType")
-          v-text-field(label="Циклоид" type="number" v-model="cycloid")
-    div.mt-4.ml-10(v-if="showAllUsers") ALL USERS  
+        p.text-right.mt-3(style="width: 20%") Логин
+        v-text-field.ml-4(v-model="userForm.login" dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Пароль
+        v-text-field.ml-4(v-model="userForm.password" dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Имя
+        v-text-field.ml-4(v-model="userForm.firstName" dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Фамилия
+        v-text-field.ml-4(v-model="userForm.lastName" dense style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-5(style="width: 20%") Пол
+        v-radio-group.ml-4(row v-model="userForm.gender" style="max-height: 30px;")
+          v-radio(value="male" label="Мужской")
+          v-radio(value="female" label="Женский")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Возраст
+        v-text-field.ml-4(v-model="userForm.userAge" dense type="number" style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Город
+        v-select.ml-4(v-model="userForm.locality" outlined dense style="max-height: 42px;" :items="localityComp" item-value="name" item-text="title")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Рост
+        v-text-field.ml-4(v-model="userForm.growth" dense type="number" style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Интересы
+        v-select.ml-4(v-model="userForm.interests" multiple outlined dense style="max-height: 42px;" :items="interestsComp" item-value="name" item-text="title")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Религия
+        v-select.ml-4(v-model="userForm.religion" outlined dense style="max-height: 42px;" :items="religionComp" item-value="name" item-text="title")
+      div.d-flex
+        p.text-right.mt-4(style="width: 20%") Цель поиска
+        v-select.ml-4.mr-4.mt-4(v-model="userForm.searchTarget" multiple outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Интересующий рост
+        v-text-field.ml-4.mr-4(v-model="userForm.interestedGrowth" dense type="number" style="max-height: 42px;")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Взгляд на семью
+        v-select.ml-4.mr-4(v-model="userForm.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Важность религии в паре
+        v-select.ml-4.mr-4(v-model="userForm.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Выраженность акцентуаций характера
+        v-row
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Параноик")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Эпилептоид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Гипертим")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Истероид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Шизоид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Психастеноид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Сенситив")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Гипотим")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Конформный тип")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Неустойчивый тип")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Астеник")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Лабильный тип")
+        v-text-field.ml-4.mr-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Циклоид")
+
+      div.justify-center(align="center")
+        v-btn.ma-4(color="primary" @click.native="addUser") Создать
+    div.mt-4.ml-10(v-if="showAllUsers") Список всех пользователей
+    div.mt-4.ml-10(v-if="createChat") Создание чата
 
     
 </template>
@@ -54,11 +100,62 @@ export default {
     drawer: false,
     createNewUser:false,
     showAllUsers:false,
-    userform: {
-      login: "",
-      password: "",
-    }
-
+    createChat:false,
+    userForm: {
+      login: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      gender: '',
+      userAge: null,
+      locality: '',
+      growth: null,
+      interestedGrowth: null,
+      interests: [],
+      familyView: '',
+      religion: '',
+      religionImportance: '',
+      searchTarget: '',
+      characterAccentuations: [],
+    },
+    interestsComp: [
+      { name: 'music', title: 'Музыка' },
+      { name: 'art', title: 'Искусство' },
+      { name: 'cinematic', title: 'Кино' },
+      { name: 'books', title: 'Книги' },
+      { name: 'games', title: 'Игры' },
+    ],
+    localityComp: [
+      { name: 'izhevsk', title: 'Ижевск' },
+      { name: 'moscow', title: 'Москва' },
+      { name: 'saint-petersburg', title: 'Санкт-Петербург' },
+    ],
+    religionComp: [
+      { name: 'orthodoxy', title: 'Православие' },
+      { name: 'catholicism', title: 'Католицизм' },
+      { name: 'protestantism', title: 'Протестантизм' },
+      { name: 'judaism', title: 'Иудаизм' },
+      { name: 'buddhism', title: 'Буддизм' },
+      { name: 'islam', title: 'Ислам' },
+      { name: 'hinduism', title: 'Индуизм' },
+      { name: 'atheism', title: 'Атеизм' },
+      { name: 'agnosticism', title: 'Агностицизм' },
+    ],
+    familyViewComp: [
+      { name: 'child_free', title: 'Без детей' },
+      { name: 'child_in_far_future', title: 'В будущем' },
+      { name: 'child_in_near_future', title: 'В ближайшей перспективе' },
+    ],
+    religionImportanceComp: [
+      { name: 'important', title: 'Важно' },
+      { name: 'not_important', title: 'Не важно' },
+    ],
+    searchTargetComp: [
+      { name: 'relationships', title: 'Отношения'},
+      { name: 'friendship', title: 'Дружба'},
+      { name: 'communication', title: 'Общение'},
+      { name: 'entertainment', title: 'Развлечения'},
+    ],
   }),
 
   methods: {
@@ -66,22 +163,19 @@ export default {
       this.createNewUser = false
       this.showAllUsers = false
       switch(type){
-        case "create":
+        case "createUser":
           this.createNewUser = true
           break;
         case "showAllUsers":
           this.showAllUsers = true
           break;
+        case "createChat":
+          this.createChat = true
+          break;
       }
     },
     addUser() {
-      axios
-          .post('http://localhost:8090/user', {
-            login: this.login,
-            password: this.password,
-            firstName: this.firstName,
-            lastName: this.lastName})
-          .then((data) => console.log('успех', data))
+
     },
     getAllUser() {
       axios

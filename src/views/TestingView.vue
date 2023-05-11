@@ -12,7 +12,7 @@
               span.text-h6(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") {{item.text}}
               v-form
                 v-radio-group(v-model="radio_group")
-                  v-radio(label="Совершенно верно, это, как правило, характеризует меня" value="2")
+                  v-radio(label="Совершенно верно, это, как правило, характеризует меня" value="2" )
                   v-radio(label="Верно, но все же бывают заметные исключения" value="1")
                   v-radio(label="Трудно сказать" value="0")
                   v-radio(label="Не верно, но все же иногда бывают такие ситуации" value="-1")
@@ -20,7 +20,6 @@
           v-card-action
             div(justify="center" align="center")
               v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 < questions.length" color="primary" rounded @click="getAnswer") Далее
-              span {{answersArray}}
               v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 == questions.length" color="primary" rounded @click="finishTestingForm") Просмотреть результат
 </template>
 
