@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "http://localhost:8090"
+    baseURL: "http://localhost:8090/api"
 })
 
 instance.interceptors.request.use(config => {
@@ -10,54 +10,104 @@ instance.interceptors.request.use(config => {
     return config;
 });
 
-// console.log("aaa",instance.);
-// const config = ()=>{
-//     { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("accessToken") }}
+instance.interceptors.response.use((response) => {
+    // Любой код состояния, находящийся в диапазоне 2xx, вызывает срабатывание этой функции
+    // Здесь можете сделать что-нибудь с ответом
+    return response;
+}, (error) => {
+    // Любые коды состояния, выходящие за пределы диапазона 2xx, вызывают срабатывание этой функции
+    // Здесь можете сделать что-то с ошибкой ответа
+    if (error.response !== undefined)
+        if (error.response.status === 401 && !error.config.url.includes("/auth/login") && !error.config.url.includes("/auth/signup")) {
 
-// }
+            if (error.config.url.includes("/auth/refresh-token")) {
+                clearStorage()
+                window.location = "/login"
+            }
+
+            if (localStorage.getItem("refreshToken")) {
+                console.log("s", !!error.config.url.includes("/auth/login"));
+                getNewAccessToken().then(() => instance.request(error.config))
+                    .catch(() => {
+                        getNewRefreshToken().then(() => instance.request(error.config))// Проблема если вызвать old date refresh token, т.е. поменять его низя, а когда вызывать обновление не понятно
+                    });
+            }
+        }
+    return Promise.reject(error);
+});
+
+let timerId;
 
 
-
-const signUp = (userInfo) => instance.post("/api/auth/signup", userInfo).then(data => {
-    // localStorage.removeItem('accessToken')
-    // localStorage.removeItem('refreshToken')
-    localStorage.setItem("accessToken", data.data.accessToken)
-    localStorage.setItem("refreshToken", data.data.refreshToken)
+const signUp = (userInfo) => instance.post("/auth/signup", userInfo).then(data => {
+    updateStorage(data)
+    setUpdateTimer(data)
+    return data.data
+})
+const signIn = (userInfo) => instance.post("/auth/login", userInfo).then(data => {
+    updateStorage(data)
+    setUpdateTimer(data)
     return data.data
 })
 
-const getAllUsers = () => instance.get("/api/user/all")
 
+const getAllUsers = () => instance.get("/user/all")
 const getUser = (userUUID) => instance.get("/user/" + userUUID)
 
-const signIn = (userInfo) => instance.post("/api/auth/login", userInfo).then(data => {
-    // localStorage.removeItem('accessToken')
-    // localStorage.removeItem('refreshToken')
-    localStorage.setItem("accessToken", data.data.accessToken)
-    localStorage.setItem("refreshToken", data.data.refreshToken)
-    return data.data
-})
-const updateUserInfo = (userInfo) => instance.post("/api/user/updateUserInfo", userInfo).then(data => data.data)
+const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data => data.data)
+const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data) //.then(data =>{;setUpdateTimer(data); return data.data} )
 
-// function getHeaders() {
-//     console.log("sdsd");
-//     if (localStorage.getItem("accessToken"))
-//         return { 'Authorization': 'Bearer ' + localStorage.getItem("accessToken") }
-// }
-// function parseJwt(token) {
-//     let base64Url = token.split('.')[1];
-//     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-//     let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-//     }).join(''));
+const logout = () => instance.post("/auth/logout", refreshToken()).then(clearStorage)
+const logoutAll = () => instance.post("/auth/logout-all", refreshToken()).then(clearStorage)
+const getNewAccessToken = () => instance.post("/auth/access-token", refreshToken()).then()
+const getNewRefreshToken = () => instance.post("/auth/refresh-token", refreshToken()).then((data) => { updateStorage(data); setUpdateTimer(data) })
 
-//     return JSON.parse(jsonPayload);
-// }//refreshToken
+const refreshToken = () => { return { refreshToken: localStorage.getItem("refreshToken") } }
+
+const updateStorage = (response) => {
+    localStorage.setItem("accessToken", response.data.accessToken)
+    localStorage.setItem("refreshToken", response.data.refreshToken)
+}
+const clearStorage = () => {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    console.log("грусть");
+}
+
+
+//Доработать, при перезагрузке ничего не запускает возможно запускать с getUserInfo (Смотри коммент выше)
+function setUpdateTimer(response) {
+    if (timerId)
+        clearTimeout(timerId)
+
+    let token = parseJwt(response.data.refreshToken)
+    /* время жизни токена - текущее время - задежка,
+     чтоб запросить новый refreshToken перед тем, как он умрет (лучше потом 5 минут поставить т.е. 50000) */
+    let updateTimeMs = new Date(token.exp * 1000) - new Date() - 10_0000
+    if (updateTimeMs / 8.64e7 < 1)// мс в дни
+        timerId = setTimeout(() => getNewRefreshToken(), updateTimeMs)// задержка больше 2147483647 == 1 NOT GOOD
+
+}
+
+function parseJwt(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}//refreshToken
 
 export default {
     getAllUsers,
     getUser,
     signUp,
     signIn,
-    updateUserInfo
+    updateUserInfo,
+    getUserInfo,
+    logout,
+    logoutAll,
+    getNewAccessToken,
+    getNewRefreshToken,
 }
