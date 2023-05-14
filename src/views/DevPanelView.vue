@@ -53,31 +53,58 @@
         p.text-right.mt-3(style="width: 20%") Выраженность акцентуаций характера
         v-row
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Параноик")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[0]" dense type="number" style="max-height: 42px;" label="Параноик")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Эпилептоид")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[1]" dense type="number" style="max-height: 42px;" label="Эпилептоид")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Гипертим")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[2]" dense type="number" style="max-height: 42px;" label="Гипертим")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Истероид")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[3]" dense type="number" style="max-height: 42px;" label="Истероид")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Шизоид")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[4]" dense type="number" style="max-height: 42px;" label="Шизоид")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Психастеноид")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[5]" dense type="number" style="max-height: 42px;" label="Психастеноид")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Сенситив")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[6]" dense type="number" style="max-height: 42px;" label="Сенситив")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Гипотим")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[7]" dense type="number" style="max-height: 42px;" label="Гипотим")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Конформный тип")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[8]" dense type="number" style="max-height: 42px;" label="Конформный тип")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Неустойчивый тип")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[9]" dense type="number" style="max-height: 42px;" label="Неустойчивый тип")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Астеник")
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[10]" dense type="number" style="max-height: 42px;" label="Астеник")
           v-col(cols="1")
-            v-text-field.ml-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Лабильный тип")
-        v-text-field.ml-4.mr-4(v-model="userForm.characterAccentuations" dense type="number" style="max-height: 42px;" label="Циклоид")
-
+            v-text-field.ml-4(v-model="userForm.characterAccentuations[11]" dense type="number" style="max-height: 42px;" label="Лабильный тип")
+        v-text-field.ml-4.mr-4(v-model="userForm.characterAccentuations[12]" dense type="number" style="max-height: 42px;" label="Циклоид")
+      div.d-flex
+        p.text-right.mt-3(style="width: 20%") Интересующие акцентуации характера
+        v-row
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[0]" dense type="number" style="max-height: 42px;" label="Параноик")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[1]" dense type="number" style="max-height: 42px;" label="Эпилептоид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[2]" dense type="number" style="max-height: 42px;" label="Гипертим")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[3]" dense type="number" style="max-height: 42px;" label="Истероид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[4]" dense type="number" style="max-height: 42px;" label="Шизоид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[5]" dense type="number" style="max-height: 42px;" label="Психастеноид")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[6]" dense type="number" style="max-height: 42px;" label="Сенситив")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[7]" dense type="number" style="max-height: 42px;" label="Гипотим")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[8]" dense type="number" style="max-height: 42px;" label="Конформный тип")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[9]" dense type="number" style="max-height: 42px;" label="Неустойчивый тип")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[10]" dense type="number" style="max-height: 42px;" label="Астеник")
+          v-col(cols="1")
+            v-text-field.ml-4(v-model="userForm.interestedCharacterAccentuations[11]" dense type="number" style="max-height: 42px;" label="Лабильный тип")
+        v-text-field.ml-4.mr-4(v-model="userForm.interestedCharacterAccentuations[12]" dense type="number" style="max-height: 42px;" label="Циклоид")
       div.justify-center(align="center")
         v-btn.ma-4(color="primary" @click.native="addUser") Создать
     div.mt-4.ml-10(v-if="showAllUsers") Список всех пользователей
@@ -117,6 +144,7 @@ export default {
       religionImportance: '',
       searchTarget: '',
       characterAccentuations: [],
+      interestedCharacterAccentuations: [],
     },
     interestsComp: [
       { name: 'music', title: 'Музыка' },

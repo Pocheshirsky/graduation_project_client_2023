@@ -21,13 +21,10 @@
 
 export default {
   name: "SearchingView",
-  data(){
-
-  },
 
   methods: {
     startSearching(){
-
+      return null
     }
   }
 }

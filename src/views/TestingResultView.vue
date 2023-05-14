@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import {mapState, mapActions} from "vuex";
 
 export default {
   name: "TestingResultView",
   data(){
     return {
-      testingResult: []
+      characterAccentuations: []
     }
   },
 
@@ -54,13 +54,17 @@ export default {
           i = 0
         }
       }
-      this.testingResult = testingResult
+      this.characterAccentuations = testingResult
     },
 
-    ...mapMutations('user', ['setTestingResult']),
     finishForm(){
-      this.setTestingResult(this.testingResult)
+      this.updateTestingResult()
       this.$router.push('/main')
+    },
+
+    ...mapActions('user', ['updateUserInfo']),
+    updateTestingResult(){
+      this.updateUserInfo(this.characterAccentuations)
     },
 
     characterTypesTitles(){
@@ -79,7 +83,7 @@ export default {
         { title: 'Лабильный тип' },
         { title: 'Циклоид' },
       ]
-      return array.map((el, i) => {el.result = this.testingResult[i]; return el})
+      return array.map((el, i) => {el.result = this.characterAccentuations[i]; return el})
     }
   }
 }

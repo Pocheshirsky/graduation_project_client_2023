@@ -1,26 +1,25 @@
 <template lang="pug">
-  v-container(fill-height)
-    v-row(class="justify-center align-center")
-      v-col(cols="12" sm="5")
-        v-card(class="elevation-12")
-          v-toolbar(dark color="primary")
-            v-btn(v-if="currentQuestionNumber > 0" icon @click="back")
-              v-icon mdi-arrow-left
-            v-toolbar-title(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") Вопрос №{{item.number}} из 104
-          v-card-text
-            div
-              span.text-h6(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") {{item.text}}
-              v-form
-                v-radio-group(v-model="radio_group")
-                  v-radio(label="Совершенно верно, это, как правило, характеризует меня" value="2" )
-                  v-radio(label="Верно, но все же бывают заметные исключения" value="1")
-                  v-radio(label="Трудно сказать" value="0")
-                  v-radio(label="Не верно, но все же иногда бывают такие ситуации" value="-1")
-                  v-radio(label="Совершенно не верно, это не свойственно для моей обычной жизни" value="-2")
-          v-card-action
-            div(justify="center" align="center")
-              v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 < questions.length" color="primary" rounded @click="getAnswer") Далее
-              v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 == questions.length" color="primary" rounded @click="finishTestingForm") Просмотреть результат
+  v-container(fill-height style="width: 50%")
+    v-row.elevation-6(class="justify-center align-center" no-gutters)
+      v-col(cols="12")
+        v-toolbar(dark color="primary")
+          v-btn(v-if="currentQuestionNumber > 0" icon @click="back")
+            v-icon mdi-arrow-left
+          v-toolbar-title(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") Вопрос №{{item.number}} из 104
+        div
+          div.ma-4
+            span.text-h6.primary--text(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") {{item.text}}
+            v-form
+              v-radio-group(v-model="radio_group")
+                v-radio(label="Совершенно верно, это, как правило, характеризует меня" value="2" )
+                v-radio(label="Верно, но все же бывают заметные исключения" value="1")
+                v-radio(label="Трудно сказать" value="0")
+                v-radio(label="Не верно, но все же иногда бывают такие ситуации" value="-1")
+                v-radio(label="Совершенно не верно, это не свойственно для моей обычной жизни" value="-2")
+        div
+          div(justify="center" align="center")
+            v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 < questions.length" color="primary" rounded @click="getAnswer") Далее
+            v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 == questions.length" color="primary" rounded @click="finishTestingForm") Просмотреть результат
 </template>
 
 <script>

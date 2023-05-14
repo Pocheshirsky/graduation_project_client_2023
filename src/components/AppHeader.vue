@@ -17,9 +17,9 @@
           v-icon(right) mdi-account-circle
         v-btn(v-if="true" text :to="'/'" @click="logout") Выйти
           v-icon(right) mdi-logout-variant
-        v-btn(v-if="false" text :to="'/login'") Войти
+        v-btn(v-if="" text :to="'/login'") Войти
           v-icon(right) mdi-login-variant
-        v-btn(v-if="false" text :to="'/devpanel'") Панель разработчика
+        v-btn(v-if="" text :to="'/devpanel'") Панель разработчика
           v-icon(right) mdi-wrench
 </template>
 

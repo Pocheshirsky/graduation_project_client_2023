@@ -51,14 +51,11 @@ export default {
         firstName: '',
         lastName: '',
         gender: '',
-        age: 0,
+        age: null,
         locality: '',
         growth: null,
-        interestedGrowth: null,
         interests: [],
-        familyView: '',
         religion: '',
-        religionImportance: ''
       },
       interestsComp: [
         { name: 'music', title: 'Музыка' },
@@ -92,7 +89,7 @@ export default {
   },
 
   mounted() {
-    this.fillForm()
+    this.fillUserForm()
   },
 
   methods: {
@@ -101,11 +98,22 @@ export default {
       this.updateUserInfo(this.userForm)
     },
 
-    fillForm(){
-      console.log("123", this.user.userInfo)
-      let info = this.user.userInfo
-      this.login = this.user.username
-      this.userForm.age = info.age
+    fillUserForm(){
+      try {
+        let info = this.user.userInfo
+        this.login = this.user.username
+        this.userForm.firstName = info.firstName
+        this.userForm.lastName = info.lastName
+        this.userForm.gender = info.gender
+        this.userForm.age = info.age
+        this.userForm.locality = info.locality
+        this.userForm.growth = info.growth
+        this.userForm.interests = info.interests
+        this.userForm.religion = info.religion
+      }
+      catch (e) {
+        console.log('EmptyUserFormException')
+      }
     }
   },
 
