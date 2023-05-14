@@ -5,6 +5,6 @@ module.exports = defineConfig({
   ]
 })
 module.rules = {
-  test: /.pug$/,
+  test: /\.pug$/,
   loader: 'pug-plain-loader'
 }
