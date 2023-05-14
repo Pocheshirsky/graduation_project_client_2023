@@ -23,15 +23,15 @@ export default {
     actions: {
         signIn({state}, userInfo) {
             api.signIn(userInfo).then((data) => {
-                state.user = data.userId;
-                console.log("123",data);
+                state.user = data.user;
+                console.log("123", data.user);
             })
             // .catch(()=>state.user = userInfo)
         },
         signUp({state}, userInfo) {
             api.signUp(userInfo).then((data) => {
-                state.user = data.userId;
-                console.log("123",data);
+                state.user = data.user;
+                console.log("123",data.user);
             })
             // .catch(()=>state.user = userInfo)
         },
@@ -44,6 +44,7 @@ export default {
             api.updateUserInfo(userInfo).then((data) => {
                 state.user=data;
             })
-        }
+        },
+
     }
 }

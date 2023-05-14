@@ -20,7 +20,7 @@
           v-radio(value="female" label="Женский")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Возраст
-        v-text-field.ml-4(v-model="userForm.userAge" dense type="number" style="max-height: 42px;")
+        v-text-field.ml-4(v-model="userForm.age" dense type="number" style="max-height: 42px;")
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Город
         v-select.ml-4(v-model="userForm.locality" outlined dense style="max-height: 42px;" :items="localityComp" item-value="name" item-text="title")
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'profile_view',
@@ -51,7 +51,7 @@ export default {
         firstName: '',
         lastName: '',
         gender: '',
-        userAge: null,
+        age: 0,
         locality: '',
         growth: null,
         interestedGrowth: null,
@@ -88,23 +88,29 @@ export default {
         { name: 'atheism', title: 'Атеизм' },
         { name: 'agnosticism', title: 'Агностицизм' },
       ],
-
     }
   },
 
   mounted() {
-    this.getUserInfo()
+    this.fillForm()
   },
 
   methods: {
     ...mapActions('user', ['updateUserInfo']),
     updateProfile(){
       this.updateUserInfo(this.userForm)
+    },
+
+    fillForm(){
+      console.log("123", this.user.userInfo)
+      let info = this.user.userInfo
+      this.login = this.user.username
+      this.userForm.age = info.age
     }
   },
 
   computed: {
-
+    ...mapState('user', ['user'])
   }
 }
 </script>

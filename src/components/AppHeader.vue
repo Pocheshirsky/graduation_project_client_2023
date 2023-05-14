@@ -37,9 +37,9 @@ export default {
 
   },
   methods: {
-    // logout() {
-    //   this.user = null
-    // }
+    logout() {
+      //this.user = null
+    }
   }
 }
 </script>

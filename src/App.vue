@@ -23,7 +23,7 @@ export default {
   }),
 
   mounted() {
-    this.loginUser()
+    //this.loginUser()
   },
 
   methods: {
