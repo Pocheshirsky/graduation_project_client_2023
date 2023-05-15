@@ -5,7 +5,7 @@
         v-avatar.ma-4(size="100")
           img.primary
       v-col(cols="7")
-        p.ml-7.text--primary.text-h4(v-model="userForm.login" ) {{userForm.login}}
+        p.ml-7.primary--text.text-h4(v-model="userForm.login" ) {{userForm.login}}
     v-container.elevation-6
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Имя

@@ -7,23 +7,26 @@
           h3.text-h4.white--text Название
       v-spacer
       div.hidden-sm-and-down
-        v-btn(v-if="true" text :to="'/messenger'") Чаты
+        v-badge(v-if="user" bottom color="green" content="notificationNumber")
+          v-icon() mdi-bell
+        v-btn(v-if="user" text :to="'/messenger'") Чаты
           v-icon(right) mdi-message-text
-        v-btn(v-if="true" text :to="'/searching'") Найти знакомство
+        v-btn(v-if="user" text :to="'/searching'") Найти знакомство
           v-icon(right) mdi-eye
-        v-btn(v-if="true" text :to="'/start_testing'") Пройти тестирование
+        v-btn(v-if="user" text :to="'/start_testing'") Пройти тестирование
           v-icon(right) mdi-puzzle
-        v-btn(v-if="true" text :to="'/profile'") Мой профиль
+        v-btn(v-if="user" text :to="'/profile'") Мой профиль
           v-icon(right) mdi-account-circle
-        v-btn(v-if="true" text :to="'/'" @click="logout") Выйти
+        v-btn(v-if="user" text :to="'/'" @click="logoutFunction") Выйти
           v-icon(right) mdi-logout-variant
-        v-btn(v-if="" text :to="'/login'") Войти
+        v-btn(v-if="!user" text :to="'/login'") Войти
           v-icon(right) mdi-login-variant
-        v-btn(v-if="" text :to="'/devpanel'") Панель разработчика
+        v-btn(v-if="user?.roles?.[0].authority == 'ADMIN'" text :to="'/devpanel'") Панель разработчика
           v-icon(right) mdi-wrench
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import {mapState} from 'vuex'
 export default {
   name: "AppHeader",
@@ -32,13 +35,23 @@ export default {
       drawer: false
     }
   },
+
+  mounted() {
+    this.checkRoles()
+  },
+
   computed:{
     ...mapState('user', ['user']),
-
   },
+
   methods: {
-    logout() {
-      //this.user = null
+    ...mapActions('user', ['logout']),
+    logoutFunction() {
+      this.logout()
+    },
+    checkRoles(){
+
+      console.log('123', this.user.roles)
     }
   }
 }

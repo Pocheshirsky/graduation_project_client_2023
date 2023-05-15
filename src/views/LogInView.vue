@@ -9,13 +9,12 @@
             v-form
               v-text-field(prepend-icon="mdi-account" label="Логин" type="text" required v-model="login")
               v-text-field(prepend-icon="mdi-lock" label="Пароль" type="password" required v-model="password")
-          v-card-actions
+          div
             div(justify="center" align="center")
               v-spacer
               v-btn.mb-2(color="primary" rounded large @click="loginUser") Войти
             div.pb-4.pt-2(justify="center" align="center")
               v-btn(align="center" justify="center" color="primary" rounded :to="'/signup'") Впервые здесь?
-            div(v-if="user") {{user}}
 </template>
 
 <script>

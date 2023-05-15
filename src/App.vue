@@ -3,14 +3,15 @@ v-app
   app-header
   v-content
     router-view
+  div.ma-12 USER: {{user}}
   v-btn(@click="sendMessage") arara
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
-import { mapActions } from "vuex";
-// import api from '@/plugins/Api'
+import { mapActions, mapState } from "vuex";
+//import api from '@/plugins/Api'
 
 export default {
   name: "App",
@@ -24,19 +25,29 @@ export default {
     stompClient: null,
   }),
 
+  beforeMount() {
+    this.getUserInfo()
+  },
+
   mounted() {
     //this.loginUser()
     // this.signIn({username: 'admineee', password: '123'})
     // this.getAllUsers().catch((er)=>console.log("ER",er));
-    // api.getUserInfo().catch((er)=>console.log("ER",er));
-    this.connect();
+    //api.getUserInfo().catch((er)=>console.log("ER",er));
+
+    //this.connect();
+  },
+
+  computed: {
+    ...mapState('user', ['user'])
   },
 
   methods: {
-    ...mapActions("user", ["signIn", "getAllUsers"]),
+    ...mapActions("user", ["signIn", "getAllUsers", "getUserInfo"]),
     //loginUser() {
     //  this.signIn({username: 'admin', password: '123'})
     //}
+
 
     connect() {
       const Stomp = require("@stomp/stompjs");
