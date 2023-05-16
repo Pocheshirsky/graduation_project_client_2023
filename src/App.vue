@@ -27,6 +27,7 @@ export default {
 
   beforeMount() {
     this.getUserInfo()
+    .then(()=>this.connect())
   },
 
   mounted() {
@@ -35,7 +36,6 @@ export default {
     // this.getAllUsers().catch((er)=>console.log("ER",er));
     //api.getUserInfo().catch((er)=>console.log("ER",er));
 
-    //this.connect();
   },
 
   computed: {
@@ -62,23 +62,24 @@ export default {
       console.log("I'am AS WEBSOCKET");
 
       this.stompClient.subscribe(
-        "/user/queue/messages",
+        `/user/${this.user.uuid}/queue/messages`,
         this.onMessageReceived
       );
     },
     onMessageReceived(msg) {
-      console.log("YXXXX", JSON.parse(msg.body));
+      console.log("Полученное сообщение", JSON.parse(msg.body));
     },
     sendMessage() {
-      console.log("arararara");
+      
       const message = {
-        senderUuid: "d79973e6-da4e-4be5-8f65-2f4d6a49caec",
-        recipientUuid: "d79973e6-da1e-4be5-8f65-2f4d6a49caec",
+        senderUuid: this.user.uuid,
+        recipientUuid: this.user.uuid,
         senderName: "admin",
         recipientName: "admineee",
         content: "hehehehe",
         timestamp: new Date(),
       };
+      console.log("arararara",message);
       this.stompClient.send("/app/chat", {}, JSON.stringify(message));
     },
 
