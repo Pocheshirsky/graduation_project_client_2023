@@ -2,8 +2,13 @@
   v-container(style="width: 40%")
     v-row.elevation-6.align-end.mb-4.mt-6(no-gutters)
       v-col(cols="3")
-        v-avatar.ma-4(size="100")
-          img.primary
+        div
+
+          input(type="file" accept="image/jpeg" @change='uploadImage')
+        div.ma-4
+          v-avatar(size="120")
+            v-img(:src="previewImage")
+
       v-col(cols="7")
         p.ml-7.primary--text.text-h4(v-model="userForm.login" ) {{userForm.login}}
     v-container.elevation-6
@@ -46,6 +51,7 @@ export default {
   data () {
     return {
       loading: false,
+      previewImage: null,
       userForm: {
         login: 'admin',
         firstName: '',
@@ -97,7 +103,15 @@ export default {
     updateProfile(){
       this.updateUserInfo(this.userForm)
     },
-
+    uploadImage(e){
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = e =>{
+        this.previewImage = e.target.result;
+        console.log(this.previewImage);
+      };
+    },
     fillUserForm(){
       try {
         let info = this.user.userInfo

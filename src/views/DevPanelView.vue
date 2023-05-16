@@ -116,6 +116,7 @@
 <script>
 
 import axios from "axios"
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'DevPanelView',
@@ -186,6 +187,10 @@ export default {
     ],
   }),
 
+  computed:{
+    ...mapState('user', ['user']),
+  },
+
   methods: {
     showPanel(type){
       this.createNewUser = false
@@ -202,8 +207,27 @@ export default {
           break;
       }
     },
-    addUser() {
 
+    ...mapActions('user', ['signUp','getAllUsers', 'updateUserInfo']),
+    addUser() {
+      if(this.login !== '' || this.password !== '') {
+        this.signUp({username: this.userForm.login, password: this.userForm.password})
+        this.updateUserInfo({
+          firstName: this.userForm.firstName,
+          lastName: this.userForm.lastName,
+          gender: this.userForm.gender,
+          age: this.userForm.userAge,
+          locality: this.userForm.locality,
+          growth: this.userForm.growth,
+          interestedGrowth: this.userForm.interestedGrowth,
+          interests: this.userForm.interests,
+          familyView: this.userForm.familyView,
+          religion: this.userForm.religion,
+          religionImportance: this.userForm.religionImportance,
+          searchTarget: this.userForm.searchTarget,
+          characterAccentuations: this.userForm.characterAccentuations,
+          interestedCharacterAccentuations: this.userForm.interestedCharacterAccentuations,})
+      } else console.log("Нет логина и пароля")
     },
     getAllUser() {
       axios

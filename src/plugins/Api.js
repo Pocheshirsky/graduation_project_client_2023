@@ -56,6 +56,7 @@ const getUser = (userUUID) => instance.get("/user/" + userUUID)
 
 const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data => data.data)
 const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data) //.then(data =>{;setUpdateTimer(data); return data.data} )
+const createUser = (userInfo) => instance.post("/user/create-user/", userInfo)
 
 const logout = () => instance.post("/auth/logout", refreshToken()).then(clearStorage)
 const logoutAll = () => instance.post("/auth/logout-all", refreshToken()).then(clearStorage)
@@ -110,4 +111,5 @@ export default {
     logoutAll,
     getNewAccessToken,
     getNewRefreshToken,
+    createUser,
 }

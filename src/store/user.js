@@ -58,5 +58,10 @@ export default {
             .catch((error)=>console.log(error))
             }
         },
+        createUser(userInfo) {
+            api.createUser(userInfo).then((data) => {
+                console.log(data.data);
+            })
+        }
     }
 }

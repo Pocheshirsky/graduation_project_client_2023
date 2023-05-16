@@ -7,9 +7,9 @@
             v-toolbar-title Регистрация
           v-card-text
             v-form
-              v-text-field(prepend-icon="mdi-account" label="Логин" type="text" :rules="['Required']" v-model="login")
-              v-text-field(prepend-icon="mdi-lock" label="Пароль" type="password" :rules="['Required']" v-model="password")
-              v-text-field(prepend-icon="mdi-lock" label="Повторите пароль" type="password" :rules="['Required']" v-model="passwordRepeat")
+              v-text-field(prepend-icon="mdi-account" label="Логин" type="text"  v-model="login")
+              v-text-field(prepend-icon="mdi-lock" label="Пароль" type="password"  v-model="password")
+              v-text-field(prepend-icon="mdi-lock" label="Повторите пароль" type="password"  v-model="passwordRepeat")
           v-card-action
             div(justify="center" align="center")
               v-spacer
@@ -34,10 +34,7 @@ export default {
 
     registration(){
       this.signUp({username: this.login, password: this.password })
-      //this.getAllUsers()
-      // console.log(this.user.name)
-      // console.log(this.$store.state.user.user.name);
-      
+      this.$router.push('/main')
     }
   }
 }

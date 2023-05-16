@@ -37,6 +37,7 @@ export default {
     ...mapActions('user', ['signIn', 'getAllUsers']),
     loginUser() {
       this.signIn({username: this.login, password: this.password})
+      this.$router.push('/main')
     }
   }
 }
