@@ -17,7 +17,7 @@ instance.interceptors.response.use((response) => {
 }, (error) => {
     // Любые коды состояния, выходящие за пределы диапазона 2xx, вызывают срабатывание этой функции
     // Здесь можете сделать что-то с ошибкой ответа
-    if (error.response !== undefined)
+    if (error.response !== undefined) {
         if (error.response.status === 401 && !error.config.url.includes("/auth/login") && !error.config.url.includes("/auth/signup")) {
 
             if (error.config.url.includes("/auth/refresh-token")) {
@@ -33,6 +33,11 @@ instance.interceptors.response.use((response) => {
                     });
             }
         }
+        if (error.response.status === 400 && error.config.url.includes("/auth/refresh-token")) {
+            clearStorage()
+            window.location = "/login"
+        }
+    }
     return Promise.reject(error);
 });
 
@@ -57,6 +62,10 @@ const getUser = (userUUID) => instance.get("/user/" + userUUID)
 const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data => data.data)
 const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data) //.then(data =>{;setUpdateTimer(data); return data.data} )
 const createUser = (userInfo) => instance.post("/user/create-user/", userInfo)
+
+const getUserAvatar = () => instance.get("/user/avatar", { responseType: "blob" }).then((data) => data.data)
+
+const setUserAvatar = (formdata) => instance.post("/user/avatar", formdata)
 
 const logout = () => instance.post("/auth/logout", refreshToken()).then(clearStorage)
 const logoutAll = () => instance.post("/auth/logout-all", refreshToken()).then(clearStorage)
@@ -112,4 +121,6 @@ export default {
     getNewAccessToken,
     getNewRefreshToken,
     createUser,
+    getUserAvatar,
+    setUserAvatar
 }

@@ -7,8 +7,9 @@
           h3.text-h4.white--text Название
       v-spacer
       div.hidden-sm-and-down
-        v-badge(v-if="user" bottom color="green" content="notificationNumber")
-          v-icon() mdi-bell
+        v-badge.mr-5(v-if="user" top color="red" overlap content="100")
+          v-btn(icon small)
+            v-icon() mdi-bell
         v-btn(v-if="user" text :to="'/messenger'") Чаты
           v-icon(right) mdi-message-text
         v-btn(v-if="user" text :to="'/searching'") Найти знакомство

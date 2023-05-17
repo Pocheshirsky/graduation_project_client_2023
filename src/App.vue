@@ -5,6 +5,8 @@ v-app
     router-view
   div.ma-12 USER: {{user}}
   v-btn(@click="sendMessage") arara
+  v-text-field(v-model="pers")
+  v-text-field(v-model="text")
 </template>
 
 <script>
@@ -23,6 +25,8 @@ export default {
   data: () => ({
     drawer: false,
     stompClient: null,
+    text:"",
+    pers:""
   }),
 
   beforeMount() {
@@ -65,18 +69,23 @@ export default {
         `/user/${this.user.uuid}/queue/messages`,
         this.onMessageReceived
       );
+      this.stompClient.subscribe(
+        "/user/hne",
+        this.onMessageReceived
+      );
     },
     onMessageReceived(msg) {
       console.log("Полученное сообщение", JSON.parse(msg.body));
+      
     },
     sendMessage() {
       
       const message = {
         senderUuid: this.user.uuid,
-        recipientUuid: this.user.uuid,
+        recipientUuid: this.pers,
         senderName: "admin",
         recipientName: "admineee",
-        content: "hehehehe",
+        content: this.text,
         timestamp: new Date(),
       };
       console.log("arararara",message);
