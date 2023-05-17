@@ -2,15 +2,16 @@
   v-container(style="width: 40%")
     v-row.elevation-6.align-end.mb-4.mt-6(no-gutters)
       v-col(cols="3")
-        div
-
-          input(type="file" accept="image/jpeg" @change='uploadImage')
         div.ma-4
-          v-avatar(size="120")
+          v-avatar(size="140")
             v-img(:src="previewImage")
-
-      v-col(cols="7")
-        p.ml-7.primary--text.text-h4(v-model="userForm.login" ) {{userForm.login}}
+      v-col(cols="1")
+        div.ma-4
+          v-btn.elevation-4(color="primary" rounded dark :loading="isSelecting" @click="handleFileImport" icon outlined)
+            v-icon mdi-pencil
+          input(ref="uploader" class="d-none" type="file" @change="onFileChanged")
+      v-col(cols="6")
+        p.ml-7.primary--text.text-h3(v-model="userForm.login" ) {{userForm.login}}
     v-container.elevation-6
       div.d-flex
         p.text-right.mt-3(style="width: 30%") Имя
@@ -52,17 +53,20 @@ export default {
     return {
       loading: false,
       previewImage: null,
+      isSelecting: false,
+
       userForm: {
         login: 'admin',
         firstName: '',
         lastName: '',
         gender: '',
-        age: null,
+        age: 0,
         locality: '',
-        growth: null,
+        growth: 0,
         interests: [],
         religion: '',
       },
+
       interestsComp: [
         { name: 'music', title: 'Музыка' },
         { name: 'art', title: 'Искусство' },
@@ -102,8 +106,16 @@ export default {
     ...mapActions('user', ['updateUserInfo']),
     updateProfile(){
       this.updateUserInfo(this.userForm)
+      this.fillUserForm()
     },
-    uploadImage(e){
+    handleFileImport() {
+      this.isSelecting = true;
+      window.addEventListener('focus', () => {
+        this.isSelecting = false
+      }, { once: true });
+      this.$refs.uploader.click();
+    },
+    onFileChanged(e) {
       const image = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(image);
@@ -112,6 +124,7 @@ export default {
         console.log(this.previewImage);
       };
     },
+
     fillUserForm(){
       try {
         let info = this.user.userInfo

@@ -1,6 +1,6 @@
 <template lang="pug">
-  v-container.elevation-2(style = "width: 50%")
-    v-row.elevation-6.align-end.mb-4.mt-6(no-gutters)
+  v-container.elevation-6(style = "width: 50%")
+    v-row.elevation-6.align-end.mb-4()
       v-col(cols="2")
         v-avatar.ma-4(size="85")
           img.primary
