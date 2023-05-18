@@ -38,7 +38,7 @@ export default {
   },
 
   mounted() {
-    this.checkRoles()
+    // this.checkRoles()
   },
 
   computed:{
@@ -50,10 +50,10 @@ export default {
     logoutFunction() {
       this.logout()
     },
-    checkRoles(){
+    // checkRoles(){
 
-      console.log('123', this.user.roles)
-    }
+    //   console.log('123', this.user.roles)
+    // }
   }
 }
 </script>

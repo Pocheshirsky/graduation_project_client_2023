@@ -17,51 +17,44 @@ export default {
     },
     actions: {
         signIn({ state }, userAuthInfo) {
-            api.signIn(userAuthInfo).then((data) => {
+            return api.signIn(userAuthInfo).then((data) => {
                 state.user = data.user;
                 console.log("Авторизация произошла", data.user);
-            })
-                .catch((error) => console.log(error))
+            }).catch((error) => console.log(error))
         },
         signUp({ state }, userAuthInfo) {
-            api.signUp(userAuthInfo).then((data) => {
+            return api.signUp(userAuthInfo).then((data) => {
                 state.user = data.user;
                 console.log("Регистрация произошла", data.user);
-            })
-                .catch((error) => console.log(error))
-            // .catch(()=>state.user = userInfo)
+            }).catch((error) => console.log(error))
         },
         getAllUsers() {
-            api.getAllUsers().then((data) => {
+            return api.getAllUsers().then((data) => {
                 console.log(data.data);
-            })
-                .catch((error) => console.log(error))// as example
+            }).catch((error) => console.log(error))
         },
         updateUserInfo({ state }, userInfo) {
             return api.updateUserInfo(userInfo).then((data) => {
                 state.user = data;
-            })
-                .catch((error) => console.log(error))
+            }).catch((error) => console.log(error))
         },
         logout({ state }) {
-            api.logout().then(() => {
+            return api.logout().then(() => {
                 state.user = null;
-            })
-                .catch((error) => console.log(error))
+            }).catch((error) => console.log(error))
         },
         getUserInfo({ state }) {
             if (!state.user) {
-                api.getUserInfo().then((data) => {
+                return api.getUserInfo().then((data) => {
                     state.user = data;
                     console.log("userInfo получен", data);
-                })
-                    .catch((error) => console.log(error))
+                }).catch((error) => console.log(error))
             }
         },
         createUser(userInfo) {
-            api.createUser(userInfo).then((data) => {
+            return api.createUser(userInfo).then((data) => {
                 console.log(data.data);
-            })
+            }).catch((error) => console.log(error))
         }
     }
 }
