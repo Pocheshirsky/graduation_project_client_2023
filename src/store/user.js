@@ -55,6 +55,17 @@ export default {
             return api.createUser(userInfo).then((data) => {
                 console.log(data.data);
             }).catch((error) => console.log(error))
-        }
+        },
+        findUserChats(obj, userUuid) {
+            return api.findUserChats(userUuid).then((data) => {
+                return data
+            }).catch((error) => console.log(error))
+        },
+        findChatMessages(obj, {senderUuid, recipientUuid}) {
+            return api.findChatMessages(senderUuid, recipientUuid).then((data) => {
+                console.log(data)
+                return data
+            }).catch((error) => console.log(error))
+        },
     }
 }

@@ -5,23 +5,24 @@
         v-avatar(size="30")
           v-img(:src="avatar")
       v-col(cols="10")
-        p {{interlocutorUsername}}
-        p {{lastMessage}}
+        p {{recipient.username}}
+
 </template>
 
 <script>
 export default {
   name: "chatSelector",
-  data(){
+  props: { recipient: Object },
+  data() {
     return {
-      interlocutorUsername: 'admin',
-      lastMessage: 'admin',
+      chatUsername: '',
       avatar: ''
     }
   },
+
   methods: {
     goToChat(){
-      this.$router.push('/chat')
+      this.$emit('click', this.recipient.uuid)
     }
   }
 }

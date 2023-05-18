@@ -35,6 +35,9 @@ function onMessageReceived(message) {
     console.log("Полученное сообщение:", JSON.parse(message.body));
 
 }
+function findUserChats() {
+
+}
 export function sendMessage(message) {
     // console.log("arararara", message);
     stompClient.send("/app/chat", {}, JSON.stringify(message));

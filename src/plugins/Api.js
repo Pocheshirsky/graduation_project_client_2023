@@ -63,9 +63,12 @@ const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data
 const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data) //.then(data =>{;setUpdateTimer(data); return data.data} )
 const createUser = (userInfo) => instance.post("/user/create-user/", userInfo)
 
-const getUserAvatar = () => instance.get("/user/avatar", { responseType: "blob" }).then((data) => data.data)
+const getUserAvatar = (userUuid) => instance.get("/user/avatar/" + userUuid, { responseType: "blob" }).then((data) => data.data)
 
 const setUserAvatar = (formdata) => instance.post("/user/avatar", formdata)
+
+const findUserChats = (userUuid) => instance.get("/messages/chat/" + userUuid).then(data => data.data)
+const findChatMessages = (senderUuid, recipientUuid) => instance.get('/messages/' + senderUuid + '/' + recipientUuid).then(data => data.data)
 
 const logout = () => instance.post("/auth/logout", refreshToken()).then(clearStorage)
 const logoutAll = () => instance.post("/auth/logout-all", refreshToken()).then(clearStorage)
@@ -122,5 +125,7 @@ export default {
     getNewRefreshToken,
     createUser,
     getUserAvatar,
-    setUserAvatar
+    setUserAvatar,
+    findUserChats,
+    findChatMessages
 }

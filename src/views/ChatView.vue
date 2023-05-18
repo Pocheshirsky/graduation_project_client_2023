@@ -18,33 +18,36 @@
     v-container.mx-auto.pa-1
       v-row(no-gutters)
         v-col
-          div.d-flex.flex-row.align-center
+          div.d-flex.flex-row.align-center {{messages}}
             v-text-field(v-model="msg" placeholder="Type Something" @keypress.enter="send")
             v-btn.ml-4(icon @click="send")
               v-icon(color="primary") mdi-send
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
 
   name: "ChatView",
   data() {
     return {
-      chat: [
-      ],
+      chat: [],
       msg:"",
       login: 'Другой пользователь',
+
+      messages: null
     }
   },
+  mounted() {
+    console.log(this.$route.params.senderUuid, this.$route.params.recipientUuid)
+    this.findChatMessages({senderUuid: this.$route.params.senderUuid, recipientUuid: this.$route.params.recipientUuid}).then(messages => this.messages = messages)
+  },
   methods: {
+    ...mapActions('user', ['findChatMessages']),
     scrollToElement() {
-    // const el = this.$refs.scrollToMe;
-    // console.log(el);
-    // if (el) {
-    //   el.el.scrollIntoView({behavior: 'smooth'});
-    // }
-    const el = this.$refs.chat;
-    el.scroll(0,el.scrollHeight)
+      const el = this.$refs.chat;
+      el.scroll(0,el.scrollHeight)
   },
     send(){
       this.chat.push(

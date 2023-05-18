@@ -80,7 +80,7 @@ const routes = [
     component: MessengerView
   },
   {
-    path: '/chat',
+    path: '/chat/:senderUuid/:recipientUuid',
     name: 'chat',
     component: ChatView
   },

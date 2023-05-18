@@ -52,7 +52,7 @@ export default {
         senderUuid: this.pers,
         recipientUuid: this.user.uuid,
         senderName: "admin",
-        recipientName: "admineee",
+        recipientName: "user1",
         content: this.text,
         timestamp: new Date(),
       };
