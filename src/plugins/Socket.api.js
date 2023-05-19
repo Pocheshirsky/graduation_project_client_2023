@@ -2,9 +2,10 @@
 /* eslint-disable */
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import store from "@/store"
+
 let stompClient;
 let userUuid;
-
 
 export function connect(uuid) {
     userUuid = uuid
@@ -25,6 +26,7 @@ export function connect(uuid) {
 //         console.log("ERROR", err)
 //     );
 // }
+
 function onConnected() {
     console.log("Соединение установлено",arguments);
 
@@ -33,7 +35,8 @@ function onConnected() {
 }
 function onMessageReceived(message) {
     console.log("Полученное сообщение:", JSON.parse(message.body));
-
+    store.state.user.newMessages.push(JSON.parse(message.body))
+        // .user.state.newMessages = ['test']
 }
 function findUserChats() {
 

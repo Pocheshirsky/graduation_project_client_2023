@@ -6,7 +6,11 @@ export default {
     state: {
         user: null,
         userAnswersArray: [],
-        userTestingResult: []
+        userTestingResult: [],
+
+
+        currentRecipient: null,
+        newMessages: [],
     },
     getters: {
     },
@@ -14,6 +18,12 @@ export default {
         setUserAnswers(state, userAnswers) {
             state.userAnswersArray = userAnswers
         },
+        setCurrentRecipient(state, recipient) {
+            state.currentRecipient = recipient
+        },
+        clearNewMessages(state){
+            state.newMessages = []
+        }
     },
     actions: {
         signIn({ state }, userAuthInfo) {

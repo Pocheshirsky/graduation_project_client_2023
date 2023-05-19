@@ -31,9 +31,9 @@ export default {
 
   beforeMount() {
     this.getUserInfo()
-    .then(()=>{
-      connect(this.user.uuid)
-    })
+        .then(()=>{
+          connect(this.user.uuid)
+        })
   },
 
   mounted() {

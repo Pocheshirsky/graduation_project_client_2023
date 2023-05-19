@@ -21,13 +21,13 @@ export default {
   components: {ChatSelector},
   data(){
     return {
-      userChats: []
+      userChats: [],
+
     }
   },
   mounted() {
     setTimeout(() => {
       this.findUserChats(this.user.uuid).then(chats => this.userChats = chats)
-
     }, 10);
   },
   computed: {
