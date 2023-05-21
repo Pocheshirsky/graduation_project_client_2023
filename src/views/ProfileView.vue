@@ -77,6 +77,11 @@ v-container(style="width: 40%")
         item-value="name",
         item-text="title"
       )
+        //template(v-slot:selection="{ item, index }")
+        //  v-chip(v-if="index < 1")
+        //    span {{ item.title }}
+        //  span.grey--text.text-caption(v-if="index === userForm.interests.length - 2") (+ ещё {{ userForm.interests.length - 2 }})
+
     .d-flex
       p.text-right.mt-3(style="width: 30%") Религия
       v-select.ml-4(

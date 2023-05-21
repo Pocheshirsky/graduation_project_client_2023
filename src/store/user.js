@@ -54,12 +54,16 @@ export default {
             }).catch((error) => console.log(error))
         },
         getUserInfo({ state }) {
-            if (!state.user) {
-                return api.getUserInfo().then((data) => {
-                    state.user = data;
-                    console.log("userInfo получен", data);
-                }).catch((error) => console.log(error))
-            }
+            return new Promise((resolve, reject) => {
+                if (!state.user && localStorage.getItem('refreshToken')) {
+                    api.getUserInfo().then((data) => {
+                        state.user = data;
+                        console.log("userInfo получен", data);
+                        resolve(data)
+                    }).catch((error) => reject(error))
+                } else reject('Пользователь не авторизован или уже существует')
+
+            })
         },
         createUser(userInfo) {
             return api.createUser(userInfo).then((data) => {
@@ -75,6 +79,11 @@ export default {
             return api.findChatMessages(senderUuid, recipientUuid).then((data) => {
                 console.log(data)
                 return data
+            }).catch((error) => console.log(error))
+        },
+        putUserInSearchingPool() {
+            return api.putUserInSearchingPool().then((data) => {
+                console.log('Помещаюсь в пул', data);
             }).catch((error) => console.log(error))
         },
     }

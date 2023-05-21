@@ -19,7 +19,6 @@ instance.interceptors.response.use((response) => {
     // Здесь можете сделать что-то с ошибкой ответа
     if (error.response !== undefined) {
         if (error.response.status === 401 && !error.config.url.includes("/auth/login") && !error.config.url.includes("/auth/signup")) {
-
             if (error.config.url.includes("/auth/refresh-token")) {
                 clearStorage()
                 window.location = "/login"
@@ -32,6 +31,7 @@ instance.interceptors.response.use((response) => {
                         getNewRefreshToken().then(() => instance.request(error.config))// Проблема если вызвать old date refresh token, т.е. поменять его низя, а когда вызывать обновление не понятно
                     });
             }
+
         }
         if (error.response.status === 400 && error.config.url.includes("/auth/refresh-token")) {
             clearStorage()
@@ -66,6 +66,8 @@ const createUser = (userInfo) => instance.post("/user/create-user/", userInfo)
 const getUserAvatar = (userUuid) => instance.get("/user/avatar/" + userUuid, { responseType: "blob" }).then((data) => data.data)
 
 const setUserAvatar = (formdata) => instance.post("/user/avatar", formdata)
+
+const putUserInSearchingPool = () => instance.post("/searching/user").then(data => data.data)
 
 const findUserChats = (userUuid) => instance.get("/messages/chat/" + userUuid).then(data => data.data)
 const findChatMessages = (senderUuid, recipientUuid) => instance.get('/messages/' + senderUuid + '/' + recipientUuid).then(data => data.data)
@@ -127,5 +129,6 @@ export default {
     getUserAvatar,
     setUserAvatar,
     findUserChats,
-    findChatMessages
+    findChatMessages,
+    putUserInSearchingPool
 }

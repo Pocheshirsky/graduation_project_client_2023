@@ -19,14 +19,19 @@
 
 <script>
 
+import {mapActions} from "vuex";
+
 export default {
   name: "SearchingView",
 
   methods: {
+    ...mapActions('user',['putUserInSearchingPool']),
     startSearching(){
-      return null
+      this.putUserInSearchingPool()
     }
-  }
+  },
+
+
 }
 </script>
 

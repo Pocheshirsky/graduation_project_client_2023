@@ -6,10 +6,8 @@
           v-toolbar(dark color="primary")
             v-toolbar-title Чаты
           div(v-for="(item, i) in userChats" :key="i")
-            chat-selector(:recipient="item" @click="test")
+            chat-selector(:recipient="item" @click="selectChat")
             v-divider.primary
-            //v-btn(:to="'./chat'" block outlined) Другой пользователь
-
 
 </template>
 
@@ -18,25 +16,33 @@ import ChatSelector from "@/components/chatSelector";
 import {mapActions, mapState} from "vuex";
 export default {
   name: "MessengerView",
-  components: {ChatSelector},
+  components: { ChatSelector },
+
   data(){
     return {
       userChats: [],
 
     }
   },
+
   mounted() {
-    setTimeout(() => {
+    if(this.user)
       this.findUserChats(this.user.uuid).then(chats => this.userChats = chats)
-    }, 10);
   },
+
+  watch: {
+    user(value) {
+      this.findUserChats(value.uuid).then(chats => this.userChats = chats)
+    }
+  },
+
   computed: {
     ...mapState('user', ['user'])
   },
+
   methods: {
     ...mapActions('user', ['findChatMessages', 'findUserChats']),
-    test(recipientUuid) {
-      console.log('тест')
+    selectChat(recipientUuid) {
       this.$router.push(`/chat/${this.user.uuid}/${recipientUuid}`)
     }
   }
