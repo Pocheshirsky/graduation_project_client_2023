@@ -10,11 +10,11 @@
       v-row.fill-height(align="end")
         v-col
           div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from === 'me' ? 'justify-end' : null]")
-            span(v-if="item.from === 'me'" class="primary--text mr-3") {{ item.msg }}
+            span.primary--text.mr-3.font-weight-bold(v-if="item.from === 'me'") {{ item.msg }}
             v-avatar(size="36")
-              v-img(:src="item.from === 'me' ? userAvatar : recipientAvatar" contain)
+              v-img( :src="item.from === 'me' ? userAvatar : recipientAvatar" contain)
               span.white--text {{ item.from[0] }}
-            span.blue--text.ml-3(v-if="item.from !== 'me'") {{ item.msg }}
+            span.primary--text.ml-3.font-weight-bold(v-if="item.from !== 'me'") {{ item.msg }}
     v-divider
     v-container.mx-auto.pa-1
       v-row(no-gutters)
@@ -149,7 +149,7 @@ export default {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-background-color: #ccc;
+  background-color: #ccc;
 }
 ::-webkit-scrollbar {
   width: 6px;

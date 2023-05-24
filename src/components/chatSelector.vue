@@ -1,11 +1,11 @@
 <template lang="pug">
   div(@click="goToChat")
-    v-row(justify="center" )
+    v-row(justify="center" style="align-items: baseline")
       v-col(cols="3")
         v-avatar.ma-4(size="50")
           v-img(:src="recipientAvatar")
-      v-col(cols="9")
-        p.text-h6.text--primary(style="") {{recipient.username}}
+      v-col(cols="9" )
+        p.text-h4.primary--text() {{recipient.username}}
 
 </template>
 
