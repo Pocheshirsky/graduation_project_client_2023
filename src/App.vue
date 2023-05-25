@@ -3,17 +3,13 @@ v-app
   app-header
   v-content
     router-view
-  //- div.ma-12 USER: {{user}}
-  v-btn(@click="sendMessage") arara
-  v-text-field(v-model="pers")
-  v-text-field(v-model="text")
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import { mapActions, mapState } from "vuex";
-import {connect, sendMessage} from '@/plugins/Socket.api'
+import { connect } from '@/plugins/Socket.api'
 
 export default {
   name: "App",
@@ -24,19 +20,14 @@ export default {
 
   data: () => ({
     drawer: false,
-    stompClient: null,
-    text:"",
-    pers:""
   }),
 
-  beforeMount() {
-    this.getUserInfo()
-        .then(()=>{
-          connect(this.user.uuid)
-        })
-  },
-
   mounted() {
+    this.getUserInfo()
+      .then(() => {
+        console.log('123', this.user)
+        connect(this.user.uuid)
+      }).catch((err)=> console.log(err))
   },
 
   computed: {
@@ -44,23 +35,11 @@ export default {
   },
 
   methods: {
-    ...mapActions("user", ["signIn", "getAllUsers", "getUserInfo"]),
-
-    sendMessage() {
-      
-      const message = {
-        senderUuid: this.pers,
-        recipientUuid: this.user.uuid,
-        senderName: "admin",
-        recipientName: "user1",
-        content: this.text,
-        timestamp: new Date(),
-      };
-      sendMessage(message)
-    },
+    ...mapActions('user', ['getUserInfo']),
   },
 };
 </script>
 
 <style>
+
 </style>

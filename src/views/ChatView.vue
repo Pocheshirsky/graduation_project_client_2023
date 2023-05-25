@@ -3,18 +3,18 @@
     v-row.elevation-6.align-end.mb-4()
       v-col(cols="2")
         v-avatar.ma-1(size="100")
-          img(:src="recipientAvatar")
+          v-img(:src="recipientAvatar" contain)
       v-col(cols="8")
         p.ml-7.primary--text.text-h3(v-model="recipientUsername" ) {{recipientUsername}}
     v-container.fill-height(class="chat" ref="chat")
       v-row.fill-height(align="end")
         v-col
           div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from === 'me' ? 'justify-end' : null]")
-            span(v-if="item.from === 'me'" class="primary--text mr-3") {{ item.msg }}
+            span.primary--text.mr-3.font-weight-bold(v-if="item.from === 'me'") {{ item.msg }}
             v-avatar(size="36")
-              img(:src="item.from === 'me' ? userAvatar : recipientAvatar")
+              v-img( :src="item.from === 'me' ? userAvatar : recipientAvatar" contain)
               span.white--text {{ item.from[0] }}
-            span.blue--text.ml-3(v-if="item.from !== 'me'") {{ item.msg }}
+            span.primary--text.ml-3.font-weight-bold(v-if="item.from !== 'me'") {{ item.msg }}
     v-divider
     v-container.mx-auto.pa-1
       v-row(no-gutters)
@@ -62,6 +62,7 @@ export default {
     //   return 1
     // }
   },
+
   watch: {
     newMessages(array) {
       this.chat.push(...array.filter((el) => el.senderUuid === this.$route.params.recipientUuid).map((el) => { return {from: "interlocutor", msg: el.content}} ))
@@ -148,7 +149,7 @@ export default {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-background-color: #ccc;
+  background-color: #ccc;
 }
 ::-webkit-scrollbar {
   width: 6px;

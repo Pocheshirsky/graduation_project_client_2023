@@ -6,7 +6,7 @@
           v-toolbar-title Настройка поиска
         div.d-flex
           p.text-right.mt-6(style="width: 30%") Цель поиска
-          v-select.ml-4.mr-4.mt-4(v-model="configuration.searchTarget" multiple outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
+          v-select.ml-4.mr-4.mt-4(v-model="configuration.searchTarget" outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
         div.d-flex
           p.text-right.mt-3(style="width: 30%") Интересующий рост
           v-text-field.ml-4.mr-4(v-model="configuration.interestedGrowth" dense type="number" style="max-height: 42px;")
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "SearchingConfiguration",
@@ -90,16 +90,24 @@ export default {
   },
 
   mounted() {
-    this.fillConfiguration()
+    setTimeout(() => {
+      this.fillConfiguration()
+    }, 100)
+  },
+
+  computed: {
+    ...mapState('user', ['user'])
   },
 
   methods: {
     ...mapActions('user', ['updateUserInfo']),
+
     updateSearchConfiguration() {
-      //преобразовать к акцентуациям
-      //отправить на сервер
       this.convertQualitiesToAccentuations()
-      this.updateUserInfo(this.configuration)
+      let user = {};
+      user.uuid = this.user.uuid;
+      user.userInfo = this.configuration;
+      this.updateUserInfo(user).then(() => this.fillConfiguration());
       this.$router.push('/searching')
     },
 
@@ -252,13 +260,7 @@ export default {
 
     fillConfiguration() {
       try {
-        let info = this.user.userInfo
-        this.configuration.searchTarget = info.searchTarget
-        this.configuration.interestedGrowth = info.interestedGrowth
-        this.configuration.familyView = info.familyView
-        this.configuration.religionImportance = info.religionImportance
-        this.personalityQualities = info.personalityQualities
-        this.configuration.interestedCharacterAccentuations = info.interestedCharacterAccentuations
+        this.configuration = Object.assign({}, this.configuration, this.user?.userInfo);
       }
       catch (e) {
         console.log('EmptyInfoException')
