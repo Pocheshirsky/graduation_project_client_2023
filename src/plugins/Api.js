@@ -61,7 +61,6 @@ const getUser = (userUUID) => instance.get("/user/" + userUUID)
 
 const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data => data.data)
 const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data) //.then(data =>{;setUpdateTimer(data); return data.data} )
-const createUser = (userInfo) => instance.post("/user/create-user/", userInfo)
 
 const getUserAvatar = (userUuid) => instance.get("/user/avatar/" + userUuid, { responseType: "blob" }).then((data) => data.data)
 
@@ -89,6 +88,9 @@ const clearStorage = () => {
     console.log("грусть");
 }
 
+const createUser = (user) => instance.post("/auth/signup", user).then(data => {
+    return data.data
+})
 
 //Доработать, при перезагрузке ничего не запускает возможно запускать с getUserInfo (Смотри коммент выше)
 function setUpdateTimer(response) {
@@ -125,10 +127,10 @@ export default {
     logoutAll,
     getNewAccessToken,
     getNewRefreshToken,
-    createUser,
     getUserAvatar,
     setUserAvatar,
     findUserChats,
     findChatMessages,
-    putUserInSearchingPool
+    putUserInSearchingPool,
+    createUser
 }

@@ -8,9 +8,6 @@
           p.text-right.mt-6(style="width: 30%") Цель поиска
           v-select.ml-4.mr-4.mt-4(v-model="configuration.searchTarget" outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
         div.d-flex
-          p.text-right.mt-3(style="width: 30%") Интересующий рост
-          v-text-field.ml-4.mr-4(v-model="configuration.interestedGrowth" dense type="number" style="max-height: 42px;")
-        div.d-flex
           p.text-right.mt-3(style="width: 30%") Взгляд на семью
           v-select.ml-4.mr-4(v-model="configuration.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
         div.d-flex
@@ -18,7 +15,7 @@
           v-select.ml-4.mr-4(v-model="configuration.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
         div.d-flex
           p.text-right.mt-3(style="width: 30%") Интересующие качества личности
-          v-select.ml-4.mr-4(v-model="configuration.personalityQualities" multiple outlined dense :items="personalityQualitiesComp" item-value="name" item-text="title")
+          v-select.ml-4.mr-4(v-model="configuration.interestedPersonalityQualities" multiple outlined dense :items="personalityQualitiesComp" item-value="name" item-text="title")
 
         div.justify-center(align="center")
           v-btn.ma-4(color="primary" @click="updateSearchConfiguration") Сохранить изменения
@@ -33,11 +30,10 @@ export default {
     return {
       configuration: {
         searchTarget: '',
-        interestedGrowth: null,
         familyView: '',
         religionImportance: '',
         interestedCharacterAccentuations: [],
-        personalityQualities: [],
+        interestedPersonalityQualities: [],
       },
 
       familyViewComp: [
@@ -114,137 +110,137 @@ export default {
     convertQualitiesToAccentuations(){
       let result = Array(13).fill(null);
       try {
-        for (let i = 0; i < this.personalityQualities.length; i++) {
-          if (this.personalityQualities[i] === 'neatness') {
+        for (let i = 0; i < this.configuration.interestedPersonalityQualities.length; i++) {
+          if (this.configuration.interestedPersonalityQualities[i] === 'neatness') {
             result[1] += 1;
             result[5] += 1;
             result[10] += 1;
           }
-          if (this.personalityQualities[i] === 'disorganization') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'disorganization') {
             result[7] += 1;
           }
-          if (this.personalityQualities[i] === 'energy') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'energy') {
             result[0] += 1;
             result[1] += 1;
             result[2] += 1;
           }
-          if (this.personalityQualities[i] === 'fatigue') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'fatigue') {
             result[4] += 1;
             result[5] += 1;
             result[7] += 1;
             result[10] += 1;
           }
-          if (this.personalityQualities[i] === 'extroversion') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'extroversion') {
             result[2] += 1;
             result[8] += 1;
             result[9] += 1;
           }
-          if (this.personalityQualities[i] === 'introversion') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'introversion') {
             result[4] += 1;
           }
-          if (this.personalityQualities[i] === 'authority') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'authority') {
             result[0] += 1;
             result[1] += 1;
             result[7] += 1;
           }
-          if (this.personalityQualities[i] === 'weakness') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'weakness') {
             result[8] += 1;
           }
-          if (this.personalityQualities[i] === 'dependence') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'dependence') {
             result[3] += 1;
             result[6] += 1;
             result[7] += 1;
             result[8] += 1;
           }
-          if (this.personalityQualities[i] === 'independence') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'independence') {
             result[0] += 1;
             result[1] += 1;
           }
-          if (this.personalityQualities[i] === 'personal_space') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'personal_space') {
             result[0] += 1;
             result[4] += 1;
           }
-          if (this.personalityQualities[i] === 'always_together') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'always_together') {
             result[6] += 1;
             result[8] += 1;
           }
-          if (this.personalityQualities[i] === 'seriousness') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'seriousness') {
             result[0] += 1;
             result[4] += 1;
           }
-          if (this.personalityQualities[i] === 'frivolity') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'frivolity') {
             result[1] += 1;
             result[2] += 1;
           }
-          if (this.personalityQualities[i] === 'stability_in_everyday_life') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'stability_in_everyday_life') {
             result[1] += 1;
             result[4] += 1;
             result[5] += 1;
             result[6] += 1;
             result[8] += 1;
           }
-          if (this.personalityQualities[i] === 'spontaneity') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'spontaneity') {
             result[3] += 1;
             result[7] += 1;
           }
-          if (this.personalityQualities[i] === 'kindness_to_others') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'kindness_to_others') {
             result[5] += 1;
             result[8] += 1;
             result[9] += 1;
             result[10] += 1;
             result[11] += 1;
           }
-          if (this.personalityQualities[i] === 'coldness_to_others') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'coldness_to_others') {
             result[0] += 1;
             result[1] += 1;
           }
-          if (this.personalityQualities[i] === 'passion') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'passion') {
             result[1] += 1;
             result[3] += 1;
             result[10] += 1;
             result[11] += 1;
             result[12] += 1;
           }
-          if (this.personalityQualities[i] === 'restraint') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'restraint') {
             result[5] += 1;
             result[6] += 1;
           }
-          if (this.personalityQualities[i] === 'cheerfulness') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'cheerfulness') {
             result[2] += 1;
           }
-          if (this.personalityQualities[i] === 'melancholy') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'melancholy') {
             result[7] += 1;
           }
-          if (this.personalityQualities[i] === 'talkativeness') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'talkativeness') {
             result[2] += 1;
             result[3] += 1;
             result[6] += 1;
             result[8] += 1;
             result[9] += 1;
           }
-          if (this.personalityQualities[i] === 'taciturnity') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'taciturnity') {
             result[4] += 1;
           }
-          if (this.personalityQualities[i] === 'thoroughness') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'thoroughness') {
             result[4] += 1;
             result[6] += 1;
             result[8] += 1;
             result[9] += 1;
           }
-          if (this.personalityQualities[i] === 'love_for_change') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'love_for_change') {
             result[2] += 1;
           }
-          if (this.personalityQualities[i] === 'vulnerability') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'vulnerability') {
             result[1] += 1;
             result[3] += 1;
             result[7] += 1;
             result[10] += 1;
             result[12] += 1;
           }
-          if (this.personalityQualities[i] === 'party-goer') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'party-goer') {
             result[3] += 1;
           }
-          if (this.personalityQualities[i] === 'stay-at-home') {
+          if (this.configuration.interestedPersonalityQualities[i] === 'stay-at-home') {
             result[4] += 1;
             result[5] += 1;
             result[6] += 1;

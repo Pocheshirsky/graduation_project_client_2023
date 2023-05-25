@@ -2,7 +2,9 @@
 v-app
   app-header
   v-content
+    div {{newAlerts}}
     router-view
+
 </template>
 
 <script>
@@ -26,12 +28,12 @@ export default {
     this.getUserInfo()
       .then(() => {
         console.log('123', this.user)
-        connect(this.user.uuid)
+        connect(this.user.uuid, this.user.userInfo.uuid)
       }).catch((err)=> console.log(err))
   },
 
   computed: {
-    ...mapState('user', ['user'])
+    ...mapState('user', ['user', 'newAlerts'])
   },
 
   methods: {

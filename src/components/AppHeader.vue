@@ -7,7 +7,7 @@
           h3.text-h4.white--text Название
       v-spacer
       div.hidden-sm-and-down
-        v-badge.mr-5(v-if="user" top color="red" overlap content="100" :content="this.user.alertsCount")
+        v-badge.mr-5(v-if="user" top color="red" overlap content="100" :content="alertsCount")
           v-btn(icon small)
             v-icon() mdi-bell
         v-btn(v-if="user" text :to="'/messenger'") Чаты
@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import {mapState} from 'vuex'
+
 export default {
   name: "AppHeader",
   data(){
@@ -43,6 +44,7 @@ export default {
 
   computed:{
     ...mapState('user', ['user']),
+    ...mapGetters('user', ['alertsCount'])
   },
 
   methods: {

@@ -24,13 +24,10 @@
           v-radio(value="female" label="Женский")
       div.d-flex
         p.text-right.mt-3(style="width: 20%") Возраст
-        v-text-field.ml-4(v-model="userForm.userAge" dense type="number" style="max-height: 42px;")
+        v-text-field.ml-4(v-model="userForm.age" dense type="number" style="max-height: 42px;")
       div.d-flex
         p.text-right.mt-3(style="width: 20%") Город
         v-select.ml-4(v-model="userForm.locality" outlined dense style="max-height: 42px;" :items="localityComp" item-value="name" item-text="title")
-      div.d-flex
-        p.text-right.mt-3(style="width: 20%") Рост
-        v-text-field.ml-4(v-model="userForm.growth" dense type="number" style="max-height: 42px;")
       div.d-flex
         p.text-right.mt-3(style="width: 20%") Интересы
         v-select.ml-4(v-model="userForm.interests" multiple outlined dense style="max-height: 42px;" :items="interestsComp" item-value="name" item-text="title")
@@ -39,10 +36,7 @@
         v-select.ml-4(v-model="userForm.religion" outlined dense style="max-height: 42px;" :items="religionComp" item-value="name" item-text="title")
       div.d-flex
         p.text-right.mt-4(style="width: 20%") Цель поиска
-        v-select.ml-4.mr-4.mt-4(v-model="userForm.searchTarget" multiple outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
-      div.d-flex
-        p.text-right.mt-3(style="width: 20%") Интересующий рост
-        v-text-field.ml-4.mr-4(v-model="userForm.interestedGrowth" dense type="number" style="max-height: 42px;")
+        v-select.ml-4.mr-4(v-model="userForm.searchTarget" outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
       div.d-flex
         p.text-right.mt-3(style="width: 20%") Взгляд на семью
         v-select.ml-4.mr-4(v-model="userForm.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
@@ -135,10 +129,8 @@ export default {
       firstName: '',
       lastName: '',
       gender: '',
-      userAge: null,
+      age: 0,
       locality: '',
-      growth: null,
-      interestedGrowth: null,
       interests: [],
       familyView: '',
       religion: '',
@@ -208,27 +200,13 @@ export default {
       }
     },
 
-    ...mapActions('user', ['signUp','getAllUsers', 'updateUserInfo']),
+    ...mapActions('user', ['createUser','getAllUsers']),
     addUser() {
       if(this.login !== '' || this.password !== '') {
-        this.signUp({username: this.userForm.login, password: this.userForm.password})
-        this.updateUserInfo({
-          firstName: this.userForm.firstName,
-          lastName: this.userForm.lastName,
-          gender: this.userForm.gender,
-          age: this.userForm.userAge,
-          locality: this.userForm.locality,
-          growth: this.userForm.growth,
-          interestedGrowth: this.userForm.interestedGrowth,
-          interests: this.userForm.interests,
-          familyView: this.userForm.familyView,
-          religion: this.userForm.religion,
-          religionImportance: this.userForm.religionImportance,
-          searchTarget: this.userForm.searchTarget,
-          characterAccentuations: this.userForm.characterAccentuations,
-          interestedCharacterAccentuations: this.userForm.interestedCharacterAccentuations,})
+        this.createUser({username: this.userForm.login, password: this.userForm.password, userInfo: this.userForm})
       } else console.log("Нет логина и пароля")
     },
+
     getAllUser() {
       axios
           .get('http://localhost:8090/user')

@@ -58,14 +58,6 @@ v-container(style="width: 40%")
         item-text="title"
       )
     .d-flex
-      p.text-right.mt-3(style="width: 30%") Рост
-      v-text-field.ml-4(
-        v-model="userForm.growth",
-        dense,
-        type="number",
-        style="max-height: 42px"
-      )
-    .d-flex
       p.text-right.mt-3(style="width: 30%") Интересы
       v-select.ml-4(
         v-model="userForm.interests",
@@ -116,7 +108,6 @@ export default {
         gender: "",
         age: 0,
         locality: "",
-        growth: 0,
         interests: [],
         religion: "",
       },

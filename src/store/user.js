@@ -10,7 +10,7 @@ export default {
 
         currentRecipient: null,
         newMessages: [],
-        newAlerts: []
+        newAlerts: [],
     },
 
     getters: {
@@ -74,12 +74,6 @@ export default {
             })
         },
 
-        createUser(userInfo) {
-            return api.createUser(userInfo).then((data) => {
-                console.log(data.data);
-            }).catch((error) => console.log(error))
-        },
-
         findUserChats(obj, userUuid) {
             return api.findUserChats(userUuid).then((data) => {
                 return data
@@ -96,6 +90,19 @@ export default {
         putUserInSearchingPool() {
             return api.putUserInSearchingPool().then((data) => {
                 console.log('Помещаюсь в пул', data);
+            }).catch((error) => console.log(error))
+        },
+
+        //For Admin Only
+        createUser(obj, user) {
+            return api.createUser(user).then((data) => {
+                console.log("Пользователь создан", data.user);
+            }).catch((error) => console.log(error))
+        },
+
+        updateUserInfoAdmin(obj, userInfo) {
+            return api.updateUserInfo(userInfo).then((data) => {
+                console.log("Пользователь создан", data.user);
             }).catch((error) => console.log(error))
         },
     }
