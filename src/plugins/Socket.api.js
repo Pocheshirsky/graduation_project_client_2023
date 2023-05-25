@@ -31,16 +31,18 @@ function onConnected() {
     console.log("Соединение установлено",arguments);
 
     stompClient.subscribe(`/user/${userUuid}/queue/messages`, onMessageReceived)
-    stompClient.subscribe("/user/hne", onMessageReceived)
+    stompClient.subscribe("/user/hne", onMessageReceived2)
 }
 function onMessageReceived(message) {
     console.log("Полученное сообщение:", JSON.parse(message.body));
     store.state.user.newMessages.push(JSON.parse(message.body))
         // .user.state.newMessages = ['test']
 }
-function findUserChats() {
 
+function onMessageReceived2(message) {
+    console.log("Полученное сообщение:", JSON.parse(message.body))
 }
+
 export function sendMessage(message) {
     // console.log("arararara", message);
     stompClient.send("/app/chat", {}, JSON.stringify(message));
