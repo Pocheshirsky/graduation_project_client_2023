@@ -10,7 +10,7 @@ export default {
 
         currentRecipient: null,
         newMessages: [],
-        newAlerts: [],
+        newAlerts: []
     },
 
     getters: {
@@ -93,15 +93,22 @@ export default {
             }).catch((error) => console.log(error))
         },
 
-        //For Admin Only
-        createUser(obj, user) {
-            return api.createUser(user).then((data) => {
-                console.log("Пользователь создан", data.user);
+        getAlertMessages({state}) {
+            return api.findAlertMessages().then((data) => {
+                state.newAlerts = data
             }).catch((error) => console.log(error))
         },
 
-        updateUserInfoAdmin(obj, userInfo) {
-            return api.updateUserInfo(userInfo).then((data) => {
+        updateMessageStatus({state}, {messageUuid, userInfoUuid}) {
+            return api.updateMessageStatus(messageUuid, userInfoUuid).then((data) => {
+                state.currentRecipient = data
+
+            }).catch((error) => console.log(error))
+        },
+
+        //For Admin Only
+        createUser(obj, user) {
+            return api.createUser(user).then((data) => {
                 console.log("Пользователь создан", data.user);
             }).catch((error) => console.log(error))
         },

@@ -3,16 +3,17 @@
     v-row.elevation-6.align-end.mb-4()
       v-col(cols="2")
         v-avatar.ma-1(size="100")
-          v-img(:src="recipientAvatar" contain)
-      v-col(cols="8")
+          v-img(:src="recipientAvatar")
+      v-col(cols="10")
         p.ml-7.primary--text.text-h3(v-model="recipientUsername" ) {{recipientUsername}}
-    v-container.fill-height(class="chat" ref="chat")
+    v-container.fill-height.chat(ref="chat")
       v-row.fill-height(align="end")
         v-col
           div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from === 'me' ? 'justify-end' : null]")
-            span.primary--text.mr-3.font-weight-bold(v-if="item.from === 'me'") {{ item.msg }}
-            v-avatar(size="36")
-              v-img( :src="item.from === 'me' ? userAvatar : recipientAvatar" contain)
+
+            span.primary--text.font-weight-bold(v-if="item.from === 'me'") {{ item.msg }}
+            v-avatar(size="36" :class="[item.from === 'me' ? 'ml-4' : null]")
+              v-img( :src="item.from === 'me' ? userAvatar : recipientAvatar")
               span.white--text {{ item.from[0] }}
             span.primary--text.ml-3.font-weight-bold(v-if="item.from !== 'me'") {{ item.msg }}
     v-divider
@@ -20,8 +21,8 @@
       v-row(no-gutters)
         v-col
           div.d-flex.flex-row.align-center
-            v-text-field(v-model="msg" placeholder="Type Something" @keypress.enter="sendMessage")
-            v-btn.ml-4(icon @click="sendMessage")
+            v-text-field(v-model="msg" ref="inputMessage" placeholder="Сообщение" @keypress.enter="sendMessage")
+            v-btn.ml-4(:disabled="disabled" icon @click="sendMessage")
               v-icon(color="primary") mdi-send
 </template>
 
@@ -36,7 +37,7 @@ export default {
   data() {
     return {
       chat: [],
-      msg: "",
+      msg: '',
 
       recipientUsername: '',
       recipientAvatar: '',
@@ -52,15 +53,14 @@ export default {
   mounted() {
     this.recipientUsername = this.currentRecipient.username
     setTimeout(() => {this.getChatMessages(); this.getAvatars()}, 50)
-
+    this.focusInput()
   },
 
   computed: {
     ...mapState('user', ['user','currentRecipient', 'newMessages']),
-    // test() {
-    //   console.log('321', this.newMessages.length)
-    //   return 1
-    // }
+    disabled(){
+      return !this.msg
+    }
   },
 
   watch: {
@@ -76,8 +76,12 @@ export default {
     ...mapActions('user', ['findChatMessages']),
     ...mapMutations('user', ['clearNewMessages']),
 
+    focusInput() {
+      this.$refs.inputMessage.focus();
+    },
+
     scrollToElement() {
-      const el = this.$refs.chat;
+      const el = this.$refs.chat
       el.scroll(0, el.scrollHeight)
     },
 
@@ -92,13 +96,13 @@ export default {
         api.getUserAvatar(this.currentRecipient.uuid).then((avatar) => {
           this.recipientAvatar = URL.createObjectURL(new Blob([avatar]));
         });
-      } else this.recipientAvatar = require("@/assets/zzz.png");
+      } else this.recipientAvatar = require("@/assets/no_avatar.png");
 
       if (this.user?.userInfo?.avatar) {
         api.getUserAvatar(this.user.uuid).then((avatar) => {
           this.userAvatar = URL.createObjectURL(new Blob([avatar]));
         });
-      } else this.userAvatar = require("@/assets/zzz.png");
+      } else this.userAvatar = require("@/assets/no_avatar.png");
     },
 
     fillChat() {
@@ -110,29 +114,32 @@ export default {
             this.chat.push({from: 'interlocutor', msg: this.messages[i].content})
         }
       }
-      console.log('ЭТО ЧАТ', this.chat)
       this.$nextTick(()=>this.scrollToElement())
     },
 
     sendMessage(){
-      const message = {
-        senderUuid: this.user.uuid,
-        recipientUuid: this.currentRecipient.uuid,
-        senderName: this.user.username,
-        recipientName: this.currentRecipient.username,
-        content: this.msg,
-        timestamp: new Date(),
-      };
+      if(this.msg) {
+        const message = {
+          senderUuid: this.user.uuid,
+          recipientUuid: this.currentRecipient.uuid,
+          senderName: this.user.username,
+          recipientName: this.currentRecipient.username,
+          content: this.msg,
+          timestamp: new Date(),
+        };
 
-      sendMessage(message)
+        sendMessage(message)
+        this.chat.push({
+          from: "me",
+          msg: this.msg
+        })
+        this.msg = ''
+        this.$nextTick(() => this.scrollToElement())
+      }
+      else {
+        this.focusInput()
 
-      this.chat.push({
-        from: "me",
-        msg: this.msg
-      })
-      this.msg = ''
-
-      this.$nextTick(()=>this.scrollToElement())
+      }
     },
   }
 }

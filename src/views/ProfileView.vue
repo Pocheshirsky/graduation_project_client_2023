@@ -166,7 +166,7 @@ export default {
         api.getUserAvatar(this.user.uuid).then((avatar) => {
           this.avatar = URL.createObjectURL(new Blob([avatar]));
         });
-      } else this.avatar = require("@/assets/zzz.png");
+      } else this.avatar = require("@/assets/no_avatar.png");
     },
 
     onFileChanged(e) {

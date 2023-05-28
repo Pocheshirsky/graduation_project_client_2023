@@ -53,9 +53,9 @@ export default {
       ],
       personalityQualitiesComp: [
         { name: 'neatness', title: 'Аккуратность' },
-        { name: 'disorganization', title: 'Неорганизованность' },
+        { name: 'disorganization', title: 'Неряшливость' },
         { name: 'energy', title: 'Энергичность' },
-        { name: 'fatigue', title: 'Утомляемость' },
+        { name: 'fatigue', title: 'Размеренность' },
         { name: 'extroversion', title: 'Экстраверсия' },
         { name: 'introversion', title: 'Интроверсия' },
         { name: 'authority', title: 'Властность' },

@@ -2,7 +2,6 @@
 v-app
   app-header
   v-content
-    div {{newAlerts}}
     router-view
 
 </template>
@@ -10,7 +9,7 @@ v-app
 <script>
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
-import { mapActions, mapState } from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import { connect } from '@/plugins/Socket.api'
 
 export default {
@@ -27,17 +26,23 @@ export default {
   mounted() {
     this.getUserInfo()
       .then(() => {
-        console.log('123', this.user)
-        connect(this.user.uuid, this.user.userInfo.uuid)
+        this.INIT()
       }).catch((err)=> console.log(err))
   },
 
   computed: {
-    ...mapState('user', ['user', 'newAlerts'])
+    ...mapState('user', ['user', 'newAlerts']),
+    ...mapGetters('user', ['alertsCount'])
   },
 
   methods: {
-    ...mapActions('user', ['getUserInfo']),
+    ...mapActions('user', ['getUserInfo', 'getAlertMessages']),
+    INIT() {
+      console.log('Это я:', this.user)
+
+      connect(this.user.uuid, this.user.userInfo.uuid)
+      this.getAlertMessages()
+    }
   },
 };
 </script>

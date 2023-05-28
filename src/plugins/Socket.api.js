@@ -35,6 +35,7 @@ function onConnected() {
     stompClient.subscribe(`/user/${userUuid}/queue/messages`, onMessageReceived)
     stompClient.subscribe(`/user/${userInfoUuid}/hne`, onMessageReceived2)
 }
+
 function onMessageReceived(message) {
     console.log("Полученное сообщение:", JSON.parse(message.body));
     store.state.user.newMessages.push(JSON.parse(message.body))
@@ -43,7 +44,7 @@ function onMessageReceived(message) {
 
 function onMessageReceived2(message) {
     console.log("Полученное сообщение:", JSON.parse(message.body))
-    store.state.user.newAlerts.push(JSON.parse(message.body))
+    store.state.user.newAlerts.push(...JSON.parse(message.body))
 }
 
 export function sendMessage(message) {

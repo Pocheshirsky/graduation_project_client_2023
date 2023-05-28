@@ -27,7 +27,9 @@ export default {
       api.getUserAvatar(this.recipient.uuid).then((avatar) => {
         this.recipientAvatar = URL.createObjectURL(new Blob([avatar]));
       });
-    } else this.recipientAvatar = require("@/assets/zzz.png");
+    } else this.recipientAvatar = require("@/assets/no_avatar.png");
+
+
   },
   computed: {
     ...mapState('user', ['currentRecipient'])
@@ -36,7 +38,7 @@ export default {
     ...mapMutations('user', ['setCurrentRecipient']),
     goToChat(){
       this.$emit('click', this.recipient.uuid)
-      this.currentRecipient = this.setCurrentRecipient(this.recipient)
+      this.setCurrentRecipient(this.recipient)
     }
   }
 }
