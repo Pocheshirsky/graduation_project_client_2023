@@ -1,6 +1,6 @@
 <template lang="pug">
 v-container(style="width: 40%")
-  v-row.elevation-6.align-end.mb-4.mt-6(no-gutters)
+  v-row.elevation-6.align-end.mb-4.mt-6.backgroundColor(no-gutters)
     v-col(cols="3")
       .ma-4
         v-avatar(size="140")
@@ -14,7 +14,7 @@ v-container(style="width: 40%")
       )
     v-col(cols="6")
       p.ml-7.primary--text.text-h3(v-model="login") {{ login }}
-  v-container.elevation-6
+  v-container.elevation-6.backgroundColor
     .d-flex
       p.text-right.mt-3(style="width: 30%") Имя
       v-text-field.ml-4(
@@ -191,4 +191,7 @@ export default {
 </script>
 
 <style>
+.backgroundColor{
+  background-color: white;
+}
 </style>

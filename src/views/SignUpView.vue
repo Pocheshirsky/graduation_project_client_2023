@@ -8,8 +8,8 @@
           v-card-text
             v-form
               v-text-field(prepend-icon="mdi-account" label="Логин" type="text"  v-model="login")
-              v-text-field(prepend-icon="mdi-lock" label="Пароль" type="password"  v-model="password")
-              v-text-field(prepend-icon="mdi-lock" label="Повторите пароль" type="password"  v-model="passwordRepeat")
+              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'"  v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
+              v-text-field(prepend-icon="mdi-lock" label="Повторите пароль" :type="showPassword2 ? 'text' : 'password'"  v-model="passwordRepeat" :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword2 = !showPassword2")
           v-card-action
             div(justify="center" align="center")
               v-spacer
@@ -23,7 +23,9 @@ export default {
     return {
       login: null,
       password: null,
-      passwordRepeat: null
+      passwordRepeat: null,
+      showPassword1: false,
+      showPassword2: false,
     }
   },
   computed:{
@@ -34,7 +36,7 @@ export default {
 
     registration(){
       this.signUp({username: this.login, password: this.password })
-      this.$router.push('/main')
+          .then(() => this.$router.push('/main'))
     }
   }
 }

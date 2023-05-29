@@ -1,7 +1,7 @@
 <template lang="pug">
 v-app
   app-header
-  v-content
+  v-content.contentColor
     router-view
 
 </template>
@@ -48,5 +48,7 @@ export default {
 </script>
 
 <style>
-
+.contentColor{
+  background-color: #ffe9d8
+}
 </style>

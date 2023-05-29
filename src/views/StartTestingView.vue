@@ -1,6 +1,6 @@
 <template lang="pug">
   v-container(fill-height style="width: 50%")
-    v-row(class="justify-center align-center" no-gutters)
+    v-row.backgroundColor(class="justify-center align-center" no-gutters)
       v-col.elevation-12(cols="12")
         v-toolbar(dark color="primary")
           v-toolbar-title Тестирование на выраженность акцентуаций характера
@@ -22,5 +22,7 @@ export default {
 </script>
 
 <style scoped>
-
+.backgroundColor{
+  background-color: white;
+}
 </style>

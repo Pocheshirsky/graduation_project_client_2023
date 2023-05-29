@@ -8,7 +8,9 @@
           div(v-for="(item, i) in userChats" :key="i")
             chat-selector(:recipient="item" @click="selectChat")
             v-divider.primary
-
+          div.pa-4(v-if="userChats") У вас пока нет активных чатов - найдите новое знакомство!
+          div.pa-4.btn(v-if="userChats")
+            v-btn( @click="goToSearching" color="primary") Поиск знакомств
 </template>
 
 <script>
@@ -44,11 +46,18 @@ export default {
     ...mapActions('user', ['findChatMessages', 'findUserChats']),
     selectChat(recipientUuid) {
       this.$router.push(`/chat/${this.user.uuid}/${recipientUuid}`)
+    },
+
+    goToSearching(){
+      this.$router.push(`/searching`)
     }
   }
 }
 </script>
 
 <style scoped>
-
+.btn{
+  margin: auto;
+  width: 50%;
+}
 </style>

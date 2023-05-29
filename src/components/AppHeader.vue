@@ -1,23 +1,17 @@
 <template lang="pug">
-    v-app-bar(app dark class="primary")
+    v-app-bar.primary(app dark)
       v-app-bar-nav-icon.hidden-md-and-up(@click.stop="drawer = !drawer" )
       router-link(:to="'/main'" tag="span" style="cursor:pointer")
         v-app-bar-title
           <!-- <h3 class="text-h4 white--text">Название</h3> -->
-          h3.text-h4.white--text Название
+          h3.text-h4.white--text Поиск знакомств
       v-spacer
       div.hidden-sm-and-down
-        v-menu
+        v-menu(v-if="user")
           template(v-slot:activator="{ on, attrs }")
             v-badge.mr-5(:value="alertsCount > 0" top color="red" :content="alertsCount" offset-x="23" offset-y="23")
               v-btn(icon v-bind="attrs" v-on="on" @click="changeDrawer")
                 v-icon() mdi-bell
-        v-menu
-          template(v-slot:activator="{ on, attrs }")
-            v-btn(v-if="!alertsCount" icon v-bind="attrs" v-on="on")
-              v-icon() mdi-bell
-          v-list
-            v-list-item Уведомлений нет :(
         v-btn(v-if="user" text :to="'/messenger'") Чаты
           v-icon(right) mdi-message-text
         v-btn(v-if="user" text :to="'/searching'") Найти знакомство
@@ -44,6 +38,8 @@
               v-col(cols="9")
                 div.primary--text() {{alert.foundUserInfo.firstName}} {{alert.foundUserInfo.lastName}}
             v-divider.primary
+          div.primary--text.ma-4(v-if="alertsCount === 0") Уведомлений нет
+            div
 </template>
 
 <script>
@@ -113,7 +109,7 @@ export default {
   top: 85px;
   right: 20px;
   height: auto;
-  width: 400px;
+  width: 28%;
   background-color: white;
 }
 .fade-enter-active, .fade-leave-active {
@@ -122,6 +118,9 @@ export default {
 
 .fade-leave-to, .fade-enter-from {
   opacity: 0;
+}
+.appBarColor{
+  color: #d0ff5b
 }
 
 </style>
