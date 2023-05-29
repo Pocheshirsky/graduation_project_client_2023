@@ -8,8 +8,8 @@
           div(v-for="(item, i) in userChats" :key="i")
             chat-selector(:recipient="item" @click="selectChat")
             v-divider.primary
-          div.pa-4(v-if="userChats") У вас пока нет активных чатов - найдите новое знакомство!
-          div.pa-4.btn(v-if="userChats")
+          div.pa-4(v-if="!userChats") У вас пока нет активных чатов - найдите новое знакомство!
+          div.pa-4.btn(v-if="!userChats")
             v-btn( @click="goToSearching" color="primary") Поиск знакомств
 </template>
 
@@ -59,5 +59,8 @@ export default {
 .btn{
   margin: auto;
   width: 50%;
+}
+.backgroundColor{
+  background-color: white;
 }
 </style>

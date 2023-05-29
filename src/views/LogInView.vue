@@ -8,7 +8,7 @@
           v-card-text
             v-form
               v-text-field(prepend-icon="mdi-account" label="Логин" type="text" required v-model="login")
-              v-text-field(prepend-icon="mdi-lock" label="Пароль" type="password" required v-model="password")
+              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" required v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
           div
             div(justify="center" align="center")
               v-spacer
@@ -26,6 +26,7 @@ export default {
     return {
       login: '',
       password: '',
+      showPassword1: false
     }
   },
 

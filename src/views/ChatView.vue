@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container.elevation-6(style = "width: 50%")
+  v-container.elevation-6.backgroundColor.mt-6(style = "width: 50%")
     v-row.elevation-6.align-end.mb-4()
       v-col(cols="2")
         v-avatar.ma-1(size="100")
@@ -12,7 +12,7 @@
           div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from === 'me' ? 'justify-end' : null]")
             span.primary--text.font-weight-bold(v-if="item.from === 'me'") {{ item.msg }}
             span.mr-2(v-if="item.from !== 'me'") {{item.time}}
-            v-avatar(size="36" :class="[item.from === 'me' ? 'ml-4' : null]")
+            v-avatar(size="36" :class="[item.from === 'me' ? 'ml-4' : null]" @click="seeProfile")
               v-img( :src="item.from === 'me' ? userAvatar : recipientAvatar")
               span.white--text {{ item.from[0] }}
             span.primary--text.ml-3.font-weight-bold(v-if="item.from !== 'me'") {{ item.msg }}
@@ -78,6 +78,10 @@ export default {
   methods: {
     ...mapActions('user', ['findChatMessages']),
     ...mapMutations('user', ['clearNewMessages']),
+
+    seeProfile(){
+
+    },
 
     focusInput() {
       this.$refs.inputMessage.focus();
