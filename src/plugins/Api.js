@@ -38,7 +38,7 @@ instance.interceptors.response.use((response) => {
             window.location = "/login"
         }
     }
-    return Promise.reject(error);
+    return Promise.reject(error.response.data.message || "BAD_REQUEST");
 });
 
 let timerId;
@@ -87,7 +87,7 @@ const updateStorage = (response) => {
 const clearStorage = () => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
-    console.log("грусть");
+    console.log("Пользователь вышел");
 }
 
 const createUser = (user) => instance.post("/auth/signup", user).then(data => {

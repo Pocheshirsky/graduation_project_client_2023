@@ -8,8 +8,8 @@
           div(v-for="(item, i) in userChats" :key="i")
             chat-selector(:recipient="item" @click="selectChat")
             v-divider.primary
-          div.pa-4(v-if="!userChats") У вас пока нет активных чатов - найдите новое знакомство!
-          div.pa-4.btn(v-if="!userChats")
+          div.pa-4(v-if="!userChats.length") У вас пока нет активных чатов - найдите новое знакомство!
+          div.pa-4.btn(v-if="!userChats.length")
             v-btn( @click="goToSearching" color="primary") Поиск знакомств
 </template>
 
@@ -23,7 +23,6 @@ export default {
   data(){
     return {
       userChats: [],
-
     }
   },
 

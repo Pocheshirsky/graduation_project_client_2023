@@ -68,7 +68,8 @@ export default {
 
   watch: {
     newMessages(array) {
-      this.chat.push(...array.filter((el) => el.senderUuid === this.$route.params.recipientUuid).map((el) => { return {from: "interlocutor", msg: el.content}} ))
+      this.chat.push(...array.filter((el) => el.senderUuid === this.$route.params.recipientUuid)
+          .map((el) => { return {from: "interlocutor", msg: el.content, time: new Date(el.timestamp).toLocaleTimeString().slice(0, -3)}} ))
       this.$nextTick(()=>this.scrollToElement())
       if(array.length)
         this.clearNewMessages()
@@ -116,7 +117,7 @@ export default {
       if(this.messages !== null) {
         for(let i = 0; i < this.messages.length; i++){
           if(this.messages[i].senderUuid === this.user.uuid)
-            this.chat.push({from: 'me', msg: this.messages[i].content, time: this.messages[i].timestamp.slice(11, -13)})
+            this.chat.push({from: 'me', msg: this.messages[i].content, time: this.messages[i]?.timestamp?.slice(11, -13)})
           if(this.messages[i].senderUuid === this.currentRecipient.uuid)
             this.chat.push({from: 'interlocutor', msg: this.messages[i].content, time: this.messages[i].timestamp.slice(11, -13)})
         }
@@ -125,6 +126,7 @@ export default {
     },
 
     sendMessage(){
+      let ct = new Date();
       if(this.msg) {
         const message = {
           senderUuid: this.user.uuid,
@@ -132,24 +134,21 @@ export default {
           senderName: this.user.username,
           recipientName: this.currentRecipient.username,
           content: this.msg,
-          timestamp: new Date(),
+          timestamp: ct.getTime(),
         };
 
         sendMessage(message)
 
-        let currentTime = new Date();
-
         this.chat.push({
           from: "me",
           msg: this.msg,
-          time: currentTime.getTime()
+          time: ct.toLocaleTimeString().slice(0, -3)
         })
         this.msg = ''
         this.$nextTick(() => this.scrollToElement())
       }
       else {
         this.focusInput()
-
       }
     },
   }

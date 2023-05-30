@@ -1,6 +1,6 @@
 <template lang="pug">
   v-container(style="width: 50%" fill-height)
-    v-row.elevation-6(no-gutters class="justify-center align-center")
+    v-row.elevation-6.backgroundColor(no-gutters class="justify-center align-center")
       v-col(cols="12")
         v-toolbar(dark color="primary")
           v-toolbar-title Настройка поиска
@@ -267,5 +267,7 @@ export default {
 </script>
 
 <style scoped>
-
+.backgroundColor{
+  background-color: white;
+}
 </style>

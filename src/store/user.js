@@ -34,14 +34,14 @@ export default {
             return api.signIn(userAuthInfo).then((data) => {
                 state.user = data.user;
                 console.log("Авторизация произошла", data.user);
-            }).catch((error) => console.log(error))
+            })
         },
 
         signUp({ state }, userAuthInfo) {
             return api.signUp(userAuthInfo).then((data) => {
                 state.user = data.user;
                 console.log("Регистрация произошла", data.user);
-            }).catch((error) => console.log(error))
+            })
         },
 
         getAllUsers() {

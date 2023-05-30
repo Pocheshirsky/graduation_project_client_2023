@@ -4,8 +4,11 @@
       v-col(cols="3")
         v-avatar.ma-4(size="50")
           v-img(:src="recipientAvatar")
-      v-col(cols="9" )
+      v-col(cols="8" )
         p.text-h4.primary--text() {{recipient.username}}
+      v-col(cols="1")
+        v-btn
+          v-icon mdi-delete
 
 </template>
 

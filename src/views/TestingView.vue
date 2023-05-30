@@ -1,6 +1,6 @@
 <template lang="pug">
   v-container(fill-height style="width: 50%")
-    v-row.elevation-6(class="justify-center align-center" no-gutters)
+    v-row.elevation-6.backgroundColor(class="justify-center align-center" no-gutters)
       v-col(cols="12")
         v-toolbar(dark color="primary")
           v-btn(v-if="currentQuestionNumber > 0" icon @click="back")
@@ -164,5 +164,7 @@ export default {
 </script>
 
 <style scoped>
-
+.backgroundColor{
+  background-color: white;
+}
 </style>

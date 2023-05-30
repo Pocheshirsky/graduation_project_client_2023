@@ -6,9 +6,9 @@
           v-toolbar(dark color="primary")
             v-toolbar-title Авторизация
           v-card-text
-            v-form
-              v-text-field(prepend-icon="mdi-account" label="Логин" type="text" required v-model="login")
-              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" required v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
+            v-form(ref="form")
+              v-text-field(prepend-icon="mdi-account" label="Электронная почта" type="text" required v-model="email" :rules="emailRules")
+              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" :rules="passwordRules" required v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
           div
             div(justify="center" align="center")
               v-spacer
@@ -24,9 +24,20 @@ export default {
   name: "LogInView",
   data() {
     return {
-      login: '',
+      email: '',
       password: '',
-      showPassword1: false
+      showPassword1: false,
+      userExists: true,
+
+      emailRules: [
+        v => !!v || 'Введите E-mail',
+        () => this.userExists || 'Неправильные E-mail или пароль'
+      ],
+
+      passwordRules: [
+        v => !!v || 'Введите пароль',
+        () => this.userExists || 'Неправильные E-mail или пароль'
+      ]
     }
   },
 
@@ -37,8 +48,9 @@ export default {
   methods: {
     ...mapActions('user', ['signIn', 'getAllUsers']),
     loginUser() {
-      this.signIn({username: this.login, password: this.password})
-      this.$router.push('/main')
+      this.signIn({username: this.email, password: this.password})
+        .then(() => {this.$router.push('/main')})
+        .catch((error) => {console.log('123', error); this.userExists = false; this.$refs.form.validate(); this.userExists = true;})
     }
   }
 }
