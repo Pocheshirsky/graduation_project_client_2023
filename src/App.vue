@@ -49,6 +49,6 @@ export default {
 
 <style>
 .contentColor{
-  background-color: #ffe9d8
+  background-color: #fdf4c5
 }
 </style>

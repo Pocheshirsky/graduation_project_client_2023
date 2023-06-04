@@ -1,18 +1,28 @@
 <template lang="pug">
   v-container.elevation-6.backgroundColor.mt-6(style = "width: 50%")
-    v-row.elevation-6.align-end.mb-4()
-      v-col(cols="2")
-        v-avatar.ma-1(size="100")
-          v-img(:src="recipientAvatar")
-      v-col(cols="10")
-        p.ml-7.primary--text.text-h3(v-model="recipientUsername" ) {{recipientUsername}}
+    v-row.elevation-6.align-center.mb-4()
+      v-col(cols="1")
+        v-btn(icon @click="$router.go(-1)" x-large)
+          v-icon mdi-arrow-left
+      v-col(cols="1")
+        v-tooltip(bottom)
+          template(v-slot:activator="{ on, attrs }")
+            v-avatar.hover(size="100" v-bind="attrs" v-on="on" @click="goToInterlocutorProfile")
+              v-img(:src="recipientAvatar")
+          span Просмотреть профиль
+      v-col(cols="7")
+        v-tooltip(bottom)
+          template(v-slot:activator="{ on, attrs }")
+            p.ml-12.text.text-h3.hover.mb-auto(v-bind="attrs" v-on="on" @click="goToInterlocutorProfile") {{recipientFirstName}} {{recipientLastName}}
+          span Просмотреть профиль
+      v-col(cols="3")
     v-container.fill-height.chat(ref="chat")
       v-row.fill-height(align="end")
         v-col
           div.w-50(v-for="(item, i) in chat" :key="i" :class="['d-flex flex-row align-center my-2', item.from === 'me' ? 'justify-end' : null]")
             span.primary--text.font-weight-bold(v-if="item.from === 'me'") {{ item.msg }}
             span.mr-2(v-if="item.from !== 'me'") {{item.time}}
-            v-avatar(size="36" :class="[item.from === 'me' ? 'ml-4' : null]" @click="seeProfile")
+            v-avatar(size="36" :class="[item.from === 'me' ? 'ml-4' : null]")
               v-img( :src="item.from === 'me' ? userAvatar : recipientAvatar")
               span.white--text {{ item.from[0] }}
             span.primary--text.ml-3.font-weight-bold(v-if="item.from !== 'me'") {{ item.msg }}
@@ -40,7 +50,8 @@ export default {
       chat: [],
       msg: '',
 
-      recipientUsername: '',
+      recipientFirstName: '',
+      recipientLastName: '',
       recipientAvatar: '',
       userAvatar: '',
 
@@ -52,10 +63,13 @@ export default {
   },
 
   mounted() {
-    if(this.currentRecipient.userInfo.firstName)
-      this.recipientUsername = this.currentRecipient.userInfo.firstName
-    else this.recipientUsername = this.currentRecipient.username
-    setTimeout(() => {this.getChatMessages(); this.getAvatars()}, 50)
+    if(this.currentRecipient.userInfo.firstName) {
+      this.recipientFirstName = this.currentRecipient.userInfo.firstName
+      this.recipientLastName = this.currentRecipient.userInfo.lastName
+    }
+    else this.recipientFirstName = this.currentRecipient.username
+
+    setTimeout(() => {this.getChatMessages(); this.getAvatars()}, 200)
     this.focusInput()
   },
 
@@ -80,8 +94,8 @@ export default {
     ...mapActions('user', ['findChatMessages']),
     ...mapMutations('user', ['clearNewMessages']),
 
-    seeProfile(){
-
+    goToInterlocutorProfile(){
+      this.$router.push(`/interlocutor`)
     },
 
     focusInput() {
@@ -95,7 +109,7 @@ export default {
 
     getChatMessages(){
       console.log(this.$route.params.senderUuid, this.$route.params.recipientUuid)
-      this.findChatMessages({senderUuid: this.$route.params.senderUuid, recipientUuid: this.$route.params.recipientUuid})
+      this.findChatMessages({ senderUuid: this.$route.params.senderUuid, recipientUuid: this.$route.params.recipientUuid })
           .then(messages => this.messages = messages).then((messages) => this.fillChat(messages))
     },
 
@@ -173,5 +187,10 @@ export default {
 }
 .backgroundColor{
   background-color: white;
+}
+.hover:hover{
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%);
+  cursor: pointer;
 }
 </style>

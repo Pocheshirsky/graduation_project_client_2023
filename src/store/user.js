@@ -106,6 +106,11 @@ export default {
             }).catch((error) => console.log(error))
         },
 
+        deleteChat(obj, {userUuid, recipientUuid}){
+            return api.deleteChat(userUuid, recipientUuid)
+                .catch((error) => console.log(error))
+        },
+
         //For Admin Only
         createUser(obj, user) {
             return api.createUser(user).then((data) => {

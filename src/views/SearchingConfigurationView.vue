@@ -3,22 +3,27 @@
     v-row.elevation-6.backgroundColor(no-gutters class="justify-center align-center")
       v-col(cols="12")
         v-toolbar(dark color="primary")
+          v-btn(icon @click="$router.go(-1)")
+            v-icon mdi-arrow-left
           v-toolbar-title Настройка поиска
         div.d-flex
-          p.text-right.mt-6(style="width: 30%") Цель поиска
-          v-select.ml-4.mr-4.mt-4(v-model="configuration.searchTarget" outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
-        div.d-flex
-          p.text-right.mt-3(style="width: 30%") Взгляд на семью
-          v-select.ml-4.mr-4(v-model="configuration.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
-        div.d-flex
-          p.text-right.mt-3(style="width: 30%") Важность религии в паре
-          v-select.ml-4.mr-4(v-model="configuration.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
-        div.d-flex
-          p.text-right.mt-3(style="width: 30%") Интересующие качества личности
-          v-select.ml-4.mr-4(v-model="configuration.interestedPersonalityQualities" multiple outlined dense :items="personalityQualitiesComp" item-value="name" item-text="title")
-
+          p.text-right.mt-6.text(style="width: 20%") Цель поиска
+          v-select.ml-4.mr-4.mt-4.text(v-model="configuration.searchTarget" outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
+        div.d-flex(v-if="configuration.searchTarget === 'relationships'")
+          p.text-right.text(style="width: 20%") Взгляд на семью
+          v-select.ml-4.mr-4.text(v-model="configuration.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
+        div.d-flex(v-if="configuration.searchTarget === 'relationships' || configuration.searchTarget === 'friendship'")
+          p.text-right.text(style="width: 20%") Важность религии в паре
+          v-select.ml-4.mr-4.text(v-model="configuration.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
+        div.d-flex(v-if="configuration.searchTarget === 'relationships'")
+          p.text-right.text(style="width: 20%") Интересующие качества личности
+          v-select.ml-4.mr-4.text(v-model="configuration.interestedPersonalityQualities" multiple outlined dense :items="personalityQualitiesComp" item-value="name" item-text="title")
+        div.text.ml-4.mr-4(v-if="configuration.searchTarget === 'relationships'") Поиск будет проходить по параметрам места жительства, пола, возраста, взглядов на семью, религии и качеств личности. Найдите себе партнера по душе!
+        div.text.ml-4.mr-4(v-if="configuration.searchTarget === 'friendship'") Поиск будет проходить по параметрам места жительства, возраста, религии и интересов. Чем больше интересов вы укажете, тем меньше будет совпадений - постарайтесь указать не более 3 интересов. Найдите себе друга и проводите вместе время!
+        div.text.ml-4.mr-4(v-if="configuration.searchTarget === 'communication'") Поиск будет проходить только по параметру интересов. Чем больше интересов вы укажете, тем меньше будет совпадений - постарайтесь указать не более 3 интересов. Общайтесь на интересующие вас темы!
+        div.text.ml-4.mr-4(v-if="configuration.searchTarget === 'entertainment'") Поиск будет проходить только по параметру интересов. Чем больше интересов вы укажете, тем меньше будет совпадений - постарайтесь указать не более 3 интересов. Найдите развлечение по вашим интересам!
         div.justify-center(align="center")
-          v-btn.ma-4(color="primary" @click="updateSearchConfiguration") Сохранить изменения
+          v-btn.ma-4(color="primary" @click="updateSearchConfiguration" dark) Сохранить изменения
 </template>
 
 <script>
@@ -267,7 +272,11 @@ export default {
 </script>
 
 <style scoped>
+.text{
+  font-size: 20px;
+  color: #1976D2
+}
 .backgroundColor{
-  background-color: white;
+  background-color: white
 }
 </style>

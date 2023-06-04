@@ -8,18 +8,18 @@
           v-toolbar-title(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") Вопрос №{{item.number}} из 104
         div
           div.ma-4
-            span.text-h6.primary--text(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") {{item.text}}
+            span.text-h6.text(v-for="(item, i) in questions" :key="i" v-if="currentQuestionNumber+1 == item.number") {{item.text}}
             v-form
               v-radio-group(v-model="radio_group")
-                v-radio(label="Совершенно верно, это, как правило, характеризует меня" value="2" )
-                v-radio(label="Верно, но все же бывают заметные исключения" value="1")
-                v-radio(label="Трудно сказать" value="0")
-                v-radio(label="Не верно, но все же иногда бывают такие ситуации" value="-1")
-                v-radio(label="Совершенно не верно, это не свойственно для моей обычной жизни" value="-2")
+                v-radio.text(label="Совершенно верно, это, как правило, характеризует меня" value="2" color="primary")
+                v-radio.text(label="Верно, но все же бывают заметные исключения" value="1" color="primary")
+                v-radio.text(label="Трудно сказать" value="0" color="primary")
+                v-radio.text(label="Не верно, но все же иногда бывают такие ситуации" value="-1" color="primary")
+                v-radio.text(label="Совершенно не верно, это не свойственно для моей обычной жизни" value="-2" color="primary")
         div
           div(justify="center" align="center")
-            v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 < questions.length" color="primary" rounded @click="getAnswer") Далее
-            v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 == questions.length" color="primary" rounded @click="finishTestingForm") Просмотреть результат
+            v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 < questions.length" rounded @click="getAnswer" color="primary" dark) Далее
+            v-btn.mt-4.mb-4(v-if="currentQuestionNumber+1 == questions.length" rounded @click="finishTestingForm" color="primary" dark) Просмотреть результат
 </template>
 
 <script>
@@ -164,7 +164,12 @@ export default {
 </script>
 
 <style scoped>
+.text{
+  font-size: 20px;
+  color: #1976D2;
+  font-weight: bold;
+}
 .backgroundColor{
-  background-color: white;
+  background-color: white
 }
 </style>

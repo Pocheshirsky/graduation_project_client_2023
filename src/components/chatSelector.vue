@@ -1,15 +1,23 @@
 <template lang="pug">
   div(@click="goToChat")
-    v-row(justify="center" style="align-items: baseline")
-      v-col(cols="3")
+    v-row.align-center
+      v-col(cols="2")
         v-avatar.ma-4(size="50")
           v-img(:src="recipientAvatar")
       v-col(cols="8" )
-        p.text-h4.primary--text() {{recipient.username}}
-      v-col(cols="1")
-        v-btn
-          v-icon mdi-delete
-
+        p.text-h4.mb-auto.text() {{recipient.username}}
+      v-col(cols="2")
+        v-dialog(v-model="dialog")
+          template(v-slot:activator="{ on, attrs }")
+            v-btn(@click="dialog = true" v-on="on" v-bind="attrs" icon color="red lighten-1" large)
+              v-icon mdi-delete
+          v-card
+            v-card-title(class="text-h5 grey lighten-1") Удалить чат
+            v-card-text.mt-2 Это действие приведет не только к удалению чата из списка, но и удалению всех сообщений вашей переписки, в том числе и для вашего собеседника. Вы уверены, что хотите удалить чат?
+            v-divider
+            v-card-actions
+              v-spacer
+              v-btn(color="red lighten-1" text @click="deleteChat") Удалить чат
 </template>
 
 <script>
@@ -22,7 +30,8 @@ export default {
   data() {
     return {
       chatUsername: '',
-      recipientAvatar: ''
+      recipientAvatar: '',
+      dialog: false
     }
   },
   mounted() {
@@ -42,11 +51,16 @@ export default {
     goToChat(){
       this.$emit('click', this.recipient.uuid)
       this.setCurrentRecipient(this.recipient)
+    },
+    deleteChat(){
+      this.$emit('chatDelete')
     }
   }
 }
 </script>
 
 <style scoped>
-
+.text{
+  color: #1976D2
+}
 </style>

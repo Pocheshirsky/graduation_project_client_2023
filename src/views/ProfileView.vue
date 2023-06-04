@@ -1,55 +1,52 @@
 <template lang="pug">
-  v-container(style="width: 40%")
-    v-row.elevation-6.align-end.mb-4.mt-6.backgroundColor(no-gutters)
-      v-col(cols="3")
-        .ma-4
-          v-avatar(size="140")
-            v-img(:src="avatar", contain)
-      v-col(cols="1")
-        v-file-input.ma-4(
-
-          hide-input,
-          prepend-icon="mdi-pencil",
-          @change="onFileChanged",
-          accept="image/png, image/jpeg"
-        )
-      v-col(cols="6")
-        p.ml-7.primary--text.text-h3(v-model="login") {{ login }}
+  v-container(style="width: 50%" )
+    v-row.elevation-6.mb-4.mt-6.align-center.white(no-gutters)
+      v-col(cols="auto")
+        v-btn.mb-auto(icon @click="$router.go(-1)" x-large color="primary")
+          v-icon mdi-arrow-left
+      v-col(cols="auto")
+        v-avatar.mt-3.mb-3(size="80")
+          v-img(:src="avatar")
+      v-col(cols="auto")
+        div.mb-12
+        v-file-input.white--text(hide-input @change="onFileChanged" accept="image/png, image/jpeg" prepend-icon="mdi-pencil")
+      v-col(cols="auto")
+        p.text-h3.text.mb-auto.ml-4.primary--text(v-model="login") {{ login }}
     v-container.elevation-6.backgroundColor
       .d-flex
-        p.text-right.mt-3(style="width: 30%") Имя
-        v-text-field.ml-4(
+        p.text.text-right.mt-6(style="width: 30%") Имя
+        v-text-field.text.ml-4.mt-5(
           v-model="userForm.firstName",
           dense,
           style="max-height: 42px"
         )
       .d-flex
-        p.text-right.mt-3(style="width: 30%") Фамилия
-        v-text-field.ml-4(
+        p.text.text-right.mt-2(style="width: 30%") Фамилия
+        v-text-field.text.ml-4(
           v-model="userForm.lastName",
           dense,
           style="max-height: 42px"
         )
       .d-flex
-        p.text-right.mt-5(style="width: 30%") Пол
-        v-radio-group.ml-4(
+        p.text.text-right.mt-4(style="width: 30%") Пол
+        v-radio-group.text.ml-4(
           row,
           v-model="userForm.gender",
-          style="max-height: 30px"
+          style="max-height: 30px",
         )
-          v-radio(value="male", label="Мужской")
-          v-radio(value="female", label="Женский")
+          v-radio(value="male", label="Мужской" color="primary")
+          v-radio(value="female", label="Женский" color="primary")
       .d-flex
-        p.text-right.mt-3(style="width: 30%") Возраст
-        v-text-field.ml-4(
+        p.text.text-right.mt-2(style="width: 30%") Возраст
+        v-text-field.text.ml-4(
           v-model="userForm.age",
           dense,
           type="number",
           style="max-height: 42px"
         )
       .d-flex
-        p.text-right.mt-3(style="width: 30%") Город
-        v-select.ml-4(
+        p.text.text-right.mt-1(style="width: 30%") Город
+        v-select.text.ml-4(
           v-model="userForm.locality",
           outlined,
           dense,
@@ -59,16 +56,16 @@
           item-text="title"
         )
       .d-flex
-        p.text-right.mt-3(style="width: 30%") Интересы
-        v-select.ml-4(
+        p.text.text-right.mt-1(style="width: 30%") Интересы
+        v-select.text.ml-4.text-left(
           v-model="userForm.interests",
           multiple,
           outlined,
           dense,
-          style="max-height: 42px",
+          style="width: 67%",
           :items="interestsComp",
           item-value="name",
-          item-text="title"
+          item-text="title",
         )
           //template(v-slot:selection="{ item, index }")
           //  v-chip(v-if="index < 1")
@@ -76,8 +73,8 @@
           //  span.grey--text.text-caption(v-if="index === userForm.interests.length - 2") (+ ещё {{ userForm.interests.length - 2 }})
 
       .d-flex
-        p.text-right.mt-3(style="width: 30%") Религия
-        v-select.ml-4(
+        p.text.text-right.mt-1(style="width: 30%") Религия
+        v-select.text.ml-4(
           v-model="userForm.religion",
           outlined,
           dense,
@@ -87,8 +84,36 @@
           item-text="title"
         )
 
+      .d-flex
+        p.text.text-right.mt-1(style="width: 30%") Отношение к курению
+        v-select.text.ml-4(
+          v-model="userForm.attitudeToSmoking",
+          outlined,
+          dense,
+          style="max-height: 42px",
+          :items="attitudeToSmokingComp",
+          item-value="name",
+          item-text="title"
+        )
+
+      .d-flex
+        p.text.text-right.mt-1(style="width: 30%") Отношение к алкоголю
+        v-select.text.ml-4(
+          v-model="userForm.attitudeToAlcohol",
+          outlined,
+          dense,
+          style="max-height: 42px",
+          :items="attitudeToAlcoholComp",
+          item-value="name",
+          item-text="title"
+        )
+
+      .d-flex
+        p.text.text-right.mt-1(style="width: 30%") О себе
+        v-textarea.text.ml-4(v-model="userForm.aboutMe" label="Расскажите о себе" dense counter="100" outlined)
+
       .justify-center(align="center")
-        v-btn.ma-4(color="primary", @click.native="updateProfile") Сохранить изменения
+        v-btn.mb-4(color="primary", @click.native="updateProfile" dark rounded) Сохранить изменения
 </template>
 
 <script>
@@ -111,13 +136,39 @@ export default {
         locality: "",
         interests: [],
         religion: "",
+        attitudeToSmoking: "",
+        attitudeToAlcohol: "",
+        aboutMe: ""
       },
+      attitudeToSmokingComp: [
+        {name: "positive", title: "Позитивное"},
+        {name: "neutral", title: "Нейтральное"},
+        {name: "negative", title: "Негативное"},
+      ],
+      attitudeToAlcoholComp: [
+        {name: "positive", title: "Позитивное"},
+        {name: "neutral", title: "Нейтральное"},
+        {name: "negative", title: "Негативное"},
+      ],
       interestsComp: [
         {name: "music", title: "Музыка"},
         {name: "art", title: "Искусство"},
+        {name: "theatre", title: "Театр"},
+        {name: "drawing", title: "Рисование"},
         {name: "cinematic", title: "Кино"},
+        {name: "anime", title: "Аниме"},
+        {name: "serials", title: "Сериалы"},
         {name: "books", title: "Книги"},
-        {name: "games", title: "Игры"},
+        {name: "table_games", title: "Настольные игры"},
+        {name: "computer_games", title: "Компьютерные игры"},
+        {name: "active_games", title: "Активные игры"},
+        {name: "sport", title: "Спорт"},
+        {name: "walking", title: "Прогулки"},
+        {name: "healthy_life", title: "Здоровый образ жизни"},
+        {name: "cars", title: "Автомобили"},
+        {name: "cooking", title: "Кулинария"},
+        {name: "dances", title: "Танцы"},
+        {name: "studying", title: "Учеба"},
       ],
       localityComp: [
         {name: "izhevsk", title: "Ижевск"},
@@ -202,6 +253,10 @@ export default {
 </script>
 
 <style>
+.text{
+  font-size: 20px;
+  color: #1976D2
+}
 .backgroundColor {
   background-color: white;
 }

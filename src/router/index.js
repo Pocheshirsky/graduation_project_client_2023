@@ -14,6 +14,7 @@ import TestingResultView from "@/views/TestingResultView";
 import GetStartedView from "@/views/GetStartedView";
 import MainView from "@/views/MainView";
 import SearchingConfigurationView from "@/views/SearchingConfigurationView";
+import InterlocutorProfileView from "@/views/InterlocutorProfileView";
 
 
 Vue.use(VueRouter)
@@ -83,6 +84,11 @@ const routes = [
     path: '/chat/:senderUuid/:recipientUuid',
     name: 'chat',
     component: ChatView
+  },
+  {
+    path: '/interlocutor',
+    name: 'interlocutorProfile',
+    component: InterlocutorProfileView
   },
   {
     path: '/main',

@@ -72,6 +72,7 @@ const findUserChats = (userUuid) => instance.get("/messages/chat/" + userUuid).t
 const findChatMessages = (senderUuid, recipientUuid) => instance.get('/messages/' + senderUuid + '/' + recipientUuid).then(data => data.data)
 const findAlertMessages = () => instance.get('/searching/message-pool').then(data => data.data)
 const updateMessageStatus = (messageUuid, userInfoUuid) => instance.put('/searching/message-pool/' + messageUuid + '/' + userInfoUuid).then(data => data.data)
+const deleteChat = (userUuid, recipientUuid) => instance.delete(`/messages/chat/${userUuid}/${recipientUuid}`)
 
 const logout = () => instance.post("/auth/logout", refreshToken()).then(clearStorage)
 const logoutAll = () => instance.post("/auth/logout-all", refreshToken()).then(clearStorage)
@@ -136,5 +137,6 @@ export default {
     putUserInSearchingPool,
     createUser,
     findAlertMessages,
-    updateMessageStatus
+    updateMessageStatus,
+    deleteChat
 }

@@ -4,17 +4,19 @@
       v-col(cols="12" sm="5")
         v-card(class="elevation-12")
           v-toolbar(dark color="primary")
+            v-btn(icon @click="$router.go(-1)")
+              v-icon mdi-arrow-left
             v-toolbar-title Авторизация
           v-card-text
             v-form(ref="form")
               v-text-field(prepend-icon="mdi-account" label="Электронная почта" type="text" required v-model="email" :rules="emailRules")
               v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" :rules="passwordRules" required v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
           div
-            div(justify="center" align="center")
+            div(align="center")
               v-spacer
-              v-btn.mb-2(color="primary" rounded large @click="loginUser") Войти
-            div.pb-4.pt-2(justify="center" align="center")
-              v-btn(align="center" justify="center" color="primary" rounded :to="'/signup'") Впервые здесь?
+              v-btn.mb-2(color="primary" rounded large @click="loginUser" dark) Войти
+            div.pb-4.pt-2(align="center")
+              v-btn(align="center" justify="center" color="primary" rounded :to="'/signup'" dark) Впервые здесь?
 </template>
 
 <script>

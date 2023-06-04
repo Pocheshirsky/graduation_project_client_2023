@@ -2,12 +2,12 @@
   v-container(fill-height)
     v-row(class="justify-center align-center")
       v-col(cols="12" sm="5")
-        v-card(class="elevation-12")
+        v-card.backgroundColor(class="elevation-12")
           v-toolbar(dark color="primary")
             v-toolbar-title Результат тестирования
           v-card-text
             div
-              v-simple-table(dense)
+              v-simple-table.backgroundColor(dense)
                 template(v-slot:default)
                   thead
                     tr
@@ -18,8 +18,8 @@
                       td.text-center {{item.title}}
                       td.text-center {{item.result}}
               v-spacer
-              div.mt-4(justify="center" align="center")
-                v-btn(color="primary" rounded @click="finishForm") Сохранить результат
+              div.mt-4(align="center")
+                v-btn(color="primary" rounded @click="finishForm" dark) Сохранить результат
 
 </template>
 
@@ -50,7 +50,7 @@ export default {
       for(let k = 0; k < n; k++){
         testingResult[i] = testingResult[i] + parseInt(userAnswers[k])
         i++
-        if(i == 13){
+        if(i === 13){
           i = 0
         }
       }
@@ -90,5 +90,11 @@ export default {
 </script>
 
 <style scoped>
-
+.text{
+  font-size: 20px;
+  color: #1976D2
+}
+.backgroundColor{
+  background-color: white
+}
 </style>
