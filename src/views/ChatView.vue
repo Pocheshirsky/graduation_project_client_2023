@@ -32,7 +32,7 @@
       v-row(no-gutters)
         v-col
           div.d-flex.flex-row.align-center
-            v-text-field(v-model="msg" ref="inputMessage" placeholder="Сообщение" @keypress.enter="sendMessage")
+            v-text-field(v-model="msg" ref="inputMessage" placeholder="Сообщение" @keypress.enter="sendMessage" counter="254")
             v-btn.ml-4(:disabled="disabled" icon @click="sendMessage" x-large)
               v-icon(color="primary") mdi-send
 </template>
@@ -140,7 +140,7 @@ export default {
     },
 
     sendMessage(){
-      let ct = new Date();
+      let ct = new Date()
       if(this.msg) {
         const message = {
           senderUuid: this.user.uuid,
@@ -149,8 +149,7 @@ export default {
           recipientName: this.currentRecipient.username,
           content: this.msg,
           timestamp: ct.getTime(),
-        };
-
+        }
         sendMessage(message)
 
         this.chat.push({

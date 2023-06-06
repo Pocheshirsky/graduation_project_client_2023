@@ -1,5 +1,3 @@
-//import api from '@/plugins/Api'
-/* eslint-disable */
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import store from "@/store"
@@ -19,16 +17,6 @@ export function connect(uuid, infoUuid) {
 
 }
 
-// function connect() {
-//     const Stomp = require("@stomp/stompjs");
-//     let SockJS = require("sockjs-client");
-//     SockJS = new SockJS("http://localhost:8090/ws");
-//     stompClient = Stomp.Stomp.over(SockJS);
-//     stompClient.connect({}, onConnected, (err) =>
-//         console.log("ERROR", err)
-//     );
-// }
-
 function onConnected() {
     console.log("Соединение установлено",arguments);
 
@@ -39,7 +27,6 @@ function onConnected() {
 function onMessageReceived(message) {
     console.log("Полученное сообщение:", JSON.parse(message.body));
     store.state.user.newMessages.push(JSON.parse(message.body))
-        // .user.state.newMessages = ['test']
 }
 
 function onMessageReceived2(message) {
@@ -48,14 +35,5 @@ function onMessageReceived2(message) {
 }
 
 export function sendMessage(message) {
-    // console.log("arararara", message);
     stompClient.send("/app/chat", {}, JSON.stringify(message));
 }
-// const message = {
-//     senderUuid: this.user.uuid,
-//     recipientUuid: this.pers,
-//     senderName: "admin",
-//     recipientName: "admineee",
-//     content: this.text,
-//     timestamp: new Date(),
-// };

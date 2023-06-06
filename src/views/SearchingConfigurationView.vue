@@ -7,16 +7,16 @@
             v-icon mdi-arrow-left
           v-toolbar-title Настройка поиска
         div.d-flex
-          p.text-right.mt-6.text(style="width: 20%") Цель поиска
+          p.text-right.mt-6.text(style="width: 25%") Цель поиска
           v-select.ml-4.mr-4.mt-4.text(v-model="configuration.searchTarget" outlined dense style="max-height: 42px;" :items="searchTargetComp" item-value="name" item-text="title")
         div.d-flex(v-if="configuration.searchTarget === 'relationships'")
-          p.text-right.text(style="width: 20%") Взгляд на семью
+          p.text-right.text(style="width: 25%") Взгляд на семью
           v-select.ml-4.mr-4.text(v-model="configuration.familyView" outlined dense style="max-height: 42px;" :items="familyViewComp" item-value="name" item-text="title")
         div.d-flex(v-if="configuration.searchTarget === 'relationships' || configuration.searchTarget === 'friendship'")
-          p.text-right.text(style="width: 20%") Важность религии в паре
+          p.text-right.text(style="width: 25%") Важность религии в паре
           v-select.ml-4.mr-4.text(v-model="configuration.religionImportance" outlined dense style="max-height: 42px;" :items="religionImportanceComp" item-value="name" item-text="title")
         div.d-flex(v-if="configuration.searchTarget === 'relationships'")
-          p.text-right.text(style="width: 20%") Интересующие качества личности
+          p.text-right.text(style="width: 25%") Интересующие качества личности
           v-select.ml-4.mr-4.text(v-model="configuration.interestedPersonalityQualities" multiple outlined dense :items="personalityQualitiesComp" item-value="name" item-text="title")
         div.text.ml-4.mr-4(v-if="configuration.searchTarget === 'relationships'") Поиск будет проходить по параметрам места жительства, пола, возраста, взглядов на семью, религии и качеств личности. Найдите себе партнера по душе!
         div.text.ml-4.mr-4(v-if="configuration.searchTarget === 'friendship'") Поиск будет проходить по параметрам места жительства, возраста, религии и интересов. Чем больше интересов вы укажете, тем меньше будет совпадений - постарайтесь указать не более 3 интересов. Найдите себе друга и проводите вместе время!
@@ -113,144 +113,147 @@ export default {
     },
 
     convertQualitiesToAccentuations(){
-      let result = Array(13).fill(null);
+      let result = Array(13).fill(0);
       try {
         for (let i = 0; i < this.configuration.interestedPersonalityQualities.length; i++) {
           if (this.configuration.interestedPersonalityQualities[i] === 'neatness') {
-            result[1] += 1;
-            result[5] += 1;
-            result[10] += 1;
+            result[1] += 1.5;
+            result[5] += 1.5;
+            result[10] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'disorganization') {
-            result[7] += 1;
+            result[7] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'energy') {
-            result[0] += 1;
-            result[1] += 1;
-            result[2] += 1;
+            result[0] += 1.5;
+            result[1] += 1.5;
+            result[2] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'fatigue') {
-            result[4] += 1;
-            result[5] += 1;
-            result[7] += 1;
-            result[10] += 1;
+            result[4] += 1.5;
+            result[5] += 1.5;
+            result[7] += 1.5;
+            result[10] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'extroversion') {
-            result[2] += 1;
-            result[8] += 1;
-            result[9] += 1;
+            result[2] += 1.5;
+            result[8] += 1.5;
+            result[9] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'introversion') {
-            result[4] += 1;
+            result[4] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'authority') {
-            result[0] += 1;
-            result[1] += 1;
-            result[7] += 1;
+            result[0] += 1.5;
+            result[1] += 1.5;
+            result[7] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'weakness') {
-            result[8] += 1;
+            result[8] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'dependence') {
-            result[3] += 1;
-            result[6] += 1;
-            result[7] += 1;
-            result[8] += 1;
+            result[3] += 1.5;
+            result[6] += 1.5;
+            result[7] += 1.5;
+            result[8] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'independence') {
-            result[0] += 1;
-            result[1] += 1;
+            result[0] += 1.5;
+            result[1] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'personal_space') {
-            result[0] += 1;
-            result[4] += 1;
+            result[0] += 1.5;
+            result[4] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'always_together') {
-            result[6] += 1;
-            result[8] += 1;
+            result[6] += 1.5;
+            result[8] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'seriousness') {
-            result[0] += 1;
-            result[4] += 1;
+            result[0] += 1.5;
+            result[4] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'frivolity') {
-            result[1] += 1;
-            result[2] += 1;
+            result[1] += 1.5;
+            result[2] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'stability_in_everyday_life') {
-            result[1] += 1;
-            result[4] += 1;
-            result[5] += 1;
-            result[6] += 1;
-            result[8] += 1;
+            result[1] += 1.5;
+            result[4] += 1.5;
+            result[5] += 1.5;
+            result[6] += 1.5;
+            result[8] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'spontaneity') {
-            result[3] += 1;
-            result[7] += 1;
+            result[3] += 1.5;
+            result[7] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'kindness_to_others') {
-            result[5] += 1;
-            result[8] += 1;
-            result[9] += 1;
-            result[10] += 1;
-            result[11] += 1;
+            result[5] += 1.5;
+            result[8] += 1.5;
+            result[9] += 1.5;
+            result[10] += 1.5;
+            result[11] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'coldness_to_others') {
-            result[0] += 1;
-            result[1] += 1;
+            result[0] += 1.5;
+            result[1] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'passion') {
-            result[1] += 1;
-            result[3] += 1;
-            result[10] += 1;
-            result[11] += 1;
-            result[12] += 1;
+            result[1] += 1.5;
+            result[3] += 1.5;
+            result[10] += 1.5;
+            result[11] += 1.5;
+            result[12] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'restraint') {
-            result[5] += 1;
-            result[6] += 1;
+            result[5] += 1.5;
+            result[6] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'cheerfulness') {
-            result[2] += 1;
+            result[2] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'melancholy') {
-            result[7] += 1;
+            result[7] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'talkativeness') {
-            result[2] += 1;
-            result[3] += 1;
-            result[6] += 1;
-            result[8] += 1;
-            result[9] += 1;
+            result[2] += 1.5;
+            result[3] += 1.5;
+            result[6] += 1.5;
+            result[8] += 1.5;
+            result[9] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'taciturnity') {
-            result[4] += 1;
+            result[4] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'thoroughness') {
-            result[4] += 1;
-            result[6] += 1;
-            result[8] += 1;
-            result[9] += 1;
+            result[4] += 1.5;
+            result[6] += 1.5;
+            result[8] += 1.5;
+            result[9] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'love_for_change') {
-            result[2] += 1;
+            result[2] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'vulnerability') {
-            result[1] += 1;
-            result[3] += 1;
-            result[7] += 1;
-            result[10] += 1;
-            result[12] += 1;
+            result[1] += 1.5;
+            result[3] += 1.5;
+            result[7] += 1.5;
+            result[10] += 1.5;
+            result[12] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'party-goer') {
-            result[3] += 1;
+            result[3] += 1.5;
           }
           if (this.configuration.interestedPersonalityQualities[i] === 'stay-at-home') {
-            result[4] += 1;
-            result[5] += 1;
-            result[6] += 1;
-            result[7] += 1;
+            result[4] += 1.5;
+            result[5] += 1.5;
+            result[6] += 1.5;
+            result[7] += 1.5;
           }
+        }
+        for(let i = 0; i < 13; i++){
+          result[i] = Math.round(result[i])
         }
       }
       catch (e){

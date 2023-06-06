@@ -15,7 +15,7 @@
             v-divider(color="#BDBDBD")
           div.pa-4(v-if="!userChats.length") У вас пока нет активных чатов - найдите новое знакомство!
           div.pa-4.btn(v-if="!userChats.length")
-            v-btn( @click="goToSearching" color="primary") Поиск знакомств
+            v-btn(@click="goToSearching" color="primary") Поиск знакомств
 </template>
 
 <script>

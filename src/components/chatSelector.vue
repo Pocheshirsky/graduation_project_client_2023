@@ -5,7 +5,7 @@
         v-avatar.ma-4(size="50")
           v-img(:src="recipientAvatar")
       v-col(cols="8" )
-        p.text-h4.mb-auto.text() {{recipient.username}}
+        p.text-h4.mb-auto.text() {{recipient.userInfo.firstName}} {{recipient.userInfo.lastName}}
       v-col(cols="2")
         v-dialog(v-model="dialog")
           template(v-slot:activator="{ on, attrs }")

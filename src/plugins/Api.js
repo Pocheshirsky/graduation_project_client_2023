@@ -11,12 +11,8 @@ instance.interceptors.request.use(config => {
 });
 
 instance.interceptors.response.use((response) => {
-    // Любой код состояния, находящийся в диапазоне 2xx, вызывает срабатывание этой функции
-    // Здесь можете сделать что-нибудь с ответом
     return response;
 }, (error) => {
-    // Любые коды состояния, выходящие за пределы диапазона 2xx, вызывают срабатывание этой функции
-    // Здесь можете сделать что-то с ошибкой ответа
     if (error.response !== undefined) {
         if (error.response.status === 401 && !error.config.url.includes("/auth/login") && !error.config.url.includes("/auth/signup")) {
             if (error.config.url.includes("/auth/refresh-token")) {
@@ -28,10 +24,9 @@ instance.interceptors.response.use((response) => {
                 console.log("s", !!error.config.url.includes("/auth/login"));
                 getNewAccessToken().then(() => instance.request(error.config))
                     .catch(() => {
-                        getNewRefreshToken().then(() => instance.request(error.config))// Проблема если вызвать old date refresh token, т.е. поменять его низя, а когда вызывать обновление не понятно
+                        getNewRefreshToken().then(() => instance.request(error.config))
                     });
             }
-
         }
         if (error.response.status === 400 && error.config.url.includes("/auth/refresh-token")) {
             clearStorage()
@@ -42,7 +37,6 @@ instance.interceptors.response.use((response) => {
 });
 
 let timerId;
-
 
 const signUp = (userInfo) => instance.post("/auth/signup", userInfo).then(data => {
     updateStorage(data)
@@ -55,12 +49,11 @@ const signIn = (userInfo) => instance.post("/auth/login", userInfo).then(data =>
     return data.data
 })
 
-
 const getAllUsers = () => instance.get("/user/all")
 const getUser = (userUUID) => instance.get("/user/" + userUUID)
 
 const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data => data.data)
-const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data) //.then(data =>{;setUpdateTimer(data); return data.data} )
+const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data)
 
 const getUserAvatar = (userUuid) => instance.get("/user/avatar/" + userUuid, { responseType: "blob" }).then((data) => data.data)
 
