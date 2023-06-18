@@ -218,7 +218,8 @@ export default {
         api.getUserAvatar(this.user.uuid).then((avatar) => {
           this.avatar = URL.createObjectURL(new Blob([avatar]));
         });
-      } else this.avatar = require("@/assets/no_avatar.png");
+      }
+      else this.avatar = require("@/assets/no_avatar.png");
     },
 
     onFileChanged(e) {
@@ -231,7 +232,11 @@ export default {
         formdata.append("file", e);
         api
             .setUserAvatar(formdata)
-            .then(() => this.loadAvatar())
+            .then(() => {
+              api.getUserAvatar(this.user.uuid).then((avatar) => {
+                this.avatar = URL.createObjectURL(new Blob([avatar]));
+              });
+            })
             .catch((er) => console.log(er));
       }
       else {
