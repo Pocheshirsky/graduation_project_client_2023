@@ -25,9 +25,14 @@ export default {
 
   mounted() {
     this.getUserInfo()
-      .then(() => {
+      .catch((err)=> console.log(err))
+  },
+
+  watch: {
+    user(newUser) {
+      if (newUser)
         this.INIT()
-      }).catch((err)=> console.log(err))
+    }
   },
 
   computed: {

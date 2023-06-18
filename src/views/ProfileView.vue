@@ -126,19 +126,19 @@ export default {
     return {
       loading: false,
       previewImage: null,
-      login: "",
-      avatar: "",
+      login: null,
+      avatar: null,
       userForm: {
-        firstName: "",
-        lastName: "",
-        gender: "",
+        firstName: null,
+        lastName: null,
+        gender: null,
         age: 0,
-        locality: "",
+        locality: null,
         interests: [],
-        religion: "",
-        attitudeToSmoking: "",
-        attitudeToAlcohol: "",
-        aboutMe: ""
+        religion: null,
+        attitudeToSmoking: null,
+        attitudeToAlcohol: null,
+        aboutMe: null
       },
       attitudeToSmokingComp: [
         {name: "positive", title: "Позитивное"},

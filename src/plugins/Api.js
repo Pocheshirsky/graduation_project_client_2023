@@ -50,7 +50,7 @@ const signIn = (userInfo) => instance.post("/auth/login", userInfo).then(data =>
 })
 
 const getAllUsers = () => instance.get("/user/all")
-const getUser = (userUUID) => instance.get("/user/" + userUUID)
+const getUser = (userUUID) => instance.get("/user/" + userUUID).then(data => data.data)
 
 const updateUserInfo = (userInfo) => instance.post("/user/", userInfo).then(data => data.data)
 const getUserInfo = () => instance.get("/user/userinfo").then(data => data.data)
@@ -67,9 +67,11 @@ const findAlertMessages = () => instance.get('/searching/message-pool').then(dat
 const updateMessageStatus = (messageUuid, userInfoUuid) => instance.put('/searching/message-pool/' + messageUuid + '/' + userInfoUuid).then(data => data.data)
 const deleteChat = (userUuid, recipientUuid) => instance.delete(`/messages/chat/${userUuid}/${recipientUuid}`)
 
+//const getUserByUuid = (userUuid) => instance.get("/", userUuid).then(data => data.data)
+
 const logout = () => instance.post("/auth/logout", refreshToken()).then(clearStorage)
 const logoutAll = () => instance.post("/auth/logout-all", refreshToken()).then(clearStorage)
-const getNewAccessToken = () => instance.post("/auth/access-token", refreshToken()).then()
+const getNewAccessToken = () => instance.post("/auth/access-token", refreshToken()).then((data) => { updateStorage(data) })
 const getNewRefreshToken = () => instance.post("/auth/refresh-token", refreshToken()).then((data) => { updateStorage(data); setUpdateTimer(data) })
 
 const refreshToken = () => { return { refreshToken: localStorage.getItem("refreshToken") } }
@@ -94,7 +96,7 @@ function setUpdateTimer(response) {
         clearTimeout(timerId)
 
     let token = parseJwt(response.data.refreshToken)
-    /* время жизни токена - текущее время - задежка,
+    /* Время жизни токена - текущее время - задержка,
      чтоб запросить новый refreshToken перед тем, как он умрет (лучше потом 5 минут поставить т.е. 50000) */
     let updateTimeMs = new Date(token.exp * 1000) - new Date() - 10_0000
     if (updateTimeMs / 8.64e7 < 1)// мс в дни
@@ -131,5 +133,6 @@ export default {
     createUser,
     findAlertMessages,
     updateMessageStatus,
-    deleteChat
+    deleteChat,
+    //getUserByUuid
 }

@@ -44,6 +44,13 @@ export default {
             })
         },
 
+        getRecipientByUuid({state}, userUuid) {
+            return api.getUser(userUuid).then((data) =>{
+                state.currentRecipient = data;
+                console.log("Собеседник получен", data)
+            })
+        },
+
         getAllUsers() {
             return api.getAllUsers().then((data) => {
                 console.log(data.data);
@@ -96,6 +103,7 @@ export default {
         getAlertMessages({state}) {
             return api.findAlertMessages().then((data) => {
                 state.newAlerts = data
+                console.log('Уведомления получены', data)
             }).catch((error) => console.log(error))
         },
 

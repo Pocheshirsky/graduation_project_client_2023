@@ -63,11 +63,7 @@ export default {
   },
 
   mounted() {
-    if(this.currentRecipient.userInfo.firstName) {
-      this.recipientFirstName = this.currentRecipient.userInfo.firstName
-      this.recipientLastName = this.currentRecipient.userInfo.lastName
-    }
-    else this.recipientFirstName = this.currentRecipient.username
+    this.getRecipientByUuid(this.$route.params.recipientUuid)
 
     setTimeout(() => {this.getChatMessages(); this.getAvatars()}, 200)
     this.focusInput()
@@ -87,11 +83,19 @@ export default {
       this.$nextTick(()=>this.scrollToElement())
       if(array.length)
         this.clearNewMessages()
+    },
+    currentRecipient(newRecipient) {
+      if(newRecipient) {
+        if(this.currentRecipient.userInfo.firstName) {
+          this.recipientFirstName = this.currentRecipient.userInfo.firstName
+          this.recipientLastName = this.currentRecipient.userInfo.lastName
+        }
+        else this.recipientFirstName = this.currentRecipient.username
+      }
     }
-
   },
   methods: {
-    ...mapActions('user', ['findChatMessages']),
+    ...mapActions('user', ['findChatMessages', 'getRecipientByUuid']),
     ...mapMutations('user', ['clearNewMessages']),
 
     goToInterlocutorProfile(){
@@ -132,7 +136,7 @@ export default {
         for(let i = 0; i < this.messages.length; i++){
           if(this.messages[i].senderUuid === this.user.uuid)
             this.chat.push({from: 'me', msg: this.messages[i].content, time: this.messages[i]?.timestamp?.slice(11, -13)})
-          if(this.messages[i].senderUuid === this.currentRecipient.uuid)
+          if(this.messages[i].senderUuid === this.$route.params.recipientUuid)
             this.chat.push({from: 'interlocutor', msg: this.messages[i].content, time: this.messages[i].timestamp.slice(11, -13)})
         }
       }
@@ -144,7 +148,7 @@ export default {
       if(this.msg) {
         const message = {
           senderUuid: this.user.uuid,
-          recipientUuid: this.currentRecipient.uuid,
+          recipientUuid: this.$route.params.recipientUuid,
           senderName: this.user.username,
           recipientName: this.currentRecipient.username,
           content: this.msg,

@@ -113,7 +113,7 @@ export default {
     },
 
     convertQualitiesToAccentuations(){
-      let result = Array(13).fill(0);
+      let result = Array(13).fill(null);
       try {
         for (let i = 0; i < this.configuration.interestedPersonalityQualities.length; i++) {
           if (this.configuration.interestedPersonalityQualities[i] === 'neatness') {

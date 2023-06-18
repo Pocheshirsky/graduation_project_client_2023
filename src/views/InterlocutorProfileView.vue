@@ -29,7 +29,7 @@
           div.ml-4.text-left.text(v-else) Не указано
         div.mb-1.d-flex
           div.text-right.text(style="width: 35%") Интересы
-          div.text-left.ml-4.text(v-if="interests" style="width: 62%")
+          div.text-left.ml-4.text(v-if="interests.length > 0" style="width: 62%")
             div.mr-2(v-for="(interest, i) in interests" :key="i") {{interest}}
           div.ml-4.text-left.text(v-else) Не указано
         div.mb-1.d-flex
