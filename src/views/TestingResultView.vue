@@ -30,7 +30,9 @@ export default {
   name: "TestingResultView",
   data(){
     return {
-      characterAccentuations: []
+      userForm: {
+        characterAccentuations: []
+      }
     }
   },
 
@@ -39,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapState('user', ['userAnswersArray']),
+    ...mapState('user', ['user','userAnswersArray']),
   },
 
   methods: {
@@ -54,7 +56,7 @@ export default {
           i = 0
         }
       }
-      this.characterAccentuations = testingResult
+      this.userForm.characterAccentuations = testingResult
     },
 
     finishForm(){
@@ -64,7 +66,10 @@ export default {
 
     ...mapActions('user', ['updateUserInfo']),
     updateTestingResult(){
-      this.updateUserInfo(this.characterAccentuations)
+      let user = {}
+      user.uuid = this.user.uuid
+      user.userInfo = this.userForm
+      this.updateUserInfo(user)
     },
 
     characterTypesTitles(){
@@ -83,7 +88,7 @@ export default {
         { title: 'Лабильный тип' },
         { title: 'Циклоид' },
       ]
-      return array.map((el, i) => {el.result = this.characterAccentuations[i]; return el})
+      return array.map((el, i) => {el.result = this.userForm.characterAccentuations[i]; return el})
     }
   }
 }

@@ -1,8 +1,8 @@
 <template lang="pug">
   div 
     v-btn.ma-4(color="primary" @click="showPanel('createUser')") Создать нового пользователя
-    v-btn.ma-4(color="primary" @click="showPanel('showAllUsers')") Список всех пользователей
-    v-btn.ma-4(color="primary" @click="showPanel('createChat')") Создать чат для пользователей
+    //v-btn.ma-4(color="primary" @click="showPanel('showAllUsers')") Список всех пользователей
+    //v-btn.ma-4(color="primary" @click="showPanel('createChat')") Создать чат для пользователей
     
     div.mt-4.ml-10(v-if="createNewUser") Создание нового пользователя
       div.d-flex

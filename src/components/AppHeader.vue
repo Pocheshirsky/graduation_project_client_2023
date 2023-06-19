@@ -1,9 +1,8 @@
 <template lang="pug">
     v-app-bar(app dark color="primary")
-      v-app-bar-nav-icon.hidden-md-and-up(@click.stop="drawer = !drawer" )
+      v-app-bar-nav-icon.hidden-md-and-up(@click.stop="smallSize = !smallSize" )
       router-link(:to="'/main'" tag="span" style="cursor:pointer")
         v-app-bar-title
-          <!-- <h3 class="text-h4 white--text">Название</h3> -->
           h3.text-h4.headerBtnsColor() Поиск знакомств
       v-spacer
       div.hidden-sm-and-down
@@ -53,6 +52,7 @@ export default {
   name: "AppHeader",
   data(){
     return {
+      smallSize: false,
       drawer: false,
       counter: 0,
       dialog: false
@@ -78,8 +78,8 @@ export default {
     goToChat(alert){
       this.updateMessageStatus({messageUuid: alert.uuid, userInfoUuid: alert.foundUserInfo.uuid} )
           .then(() => {
-            if(this.$route.path !== `/chat/${this.user.uuid}/${alert.userUuid}`) {
-              this.$router.push(`/chat/${this.user.uuid}/${alert.userUuid}`)
+            if(this.$route.path !== `/chat/${this.user.uuid}/${alert.foundUserUuid}`) {
+              this.$router.push(`/chat/${this.user.uuid}/${alert.foundUserUuid}`)
             }
           }).catch(console.log)
       this.drawer = false
