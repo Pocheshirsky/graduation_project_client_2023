@@ -2,15 +2,15 @@
   v-container(fill-height)
     v-row(class="justify-center align-center")
       v-col(cols="12" sm="5")
-        v-card(class="elevation-12")
+        v-card(class="elevation-12" )
           v-toolbar(dark color="primary")
             v-btn(icon @click="$router.go(-1)")
               v-icon mdi-arrow-left
             v-toolbar-title Авторизация
           v-card-text
             v-form(ref="form")
-              v-text-field(prepend-icon="mdi-account" label="Электронная почта" type="text" required v-model="email" :rules="emailRules")
-              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" :rules="passwordRules" required v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
+              v-text-field(prepend-icon="mdi-account"  @keyup.enter="loginUser" label="Электронная почта" type="text" required v-model="email" :rules="emailRules" )
+              v-text-field(prepend-icon="mdi-lock" @keyup.enter="loginUser" label="Пароль" :type="showPassword1 ? 'text' : 'password'" :rules="passwordRules" required v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1" :keyup.enter="loginUser")
           div
             div(align="center")
               v-spacer
@@ -50,6 +50,7 @@ export default {
   methods: {
     ...mapActions('user', ['signIn', 'getAllUsers']),
     loginUser() {
+      console.log("zaza");
       this.signIn({username: this.email, password: this.password})
         .then(() => {this.$router.push('/main')})
         .catch((error) => {console.log('123', error); this.userExists = false; this.$refs.form.validate(); this.userExists = true;})

@@ -2,8 +2,8 @@
     v-app-bar(app dark color="primary")
       v-app-bar-nav-icon.hidden-md-and-up(@click.stop="smallSize = !smallSize" )
       router-link(:to="'/main'" tag="span" style="cursor:pointer")
-        v-app-bar-title
-          h3.text-h4.headerBtnsColor() Поиск знакомств
+        div.text-h4.headerBtnsColor() Поиск знакомств
+          
       v-spacer
       div.hidden-sm-and-down
         v-menu(v-if="user")
@@ -110,7 +110,8 @@ export default {
 
 <style>
 .headerBtnsColor{
-  color: white
+  color: white;
+ 
 }
 .btnBackColor{
   background-color: #1E88E5;

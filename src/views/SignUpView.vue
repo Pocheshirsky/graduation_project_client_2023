@@ -9,9 +9,9 @@
             v-toolbar-title Регистрация
           v-card-text
             v-form(ref="form")
-              v-text-field(prepend-icon="mdi-account" label="Электронная почта" type="text"  v-model="email" :rules="emailRules" :counter="35")
-              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" :rules="passwordRules" :counter="20" v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
-              v-text-field(prepend-icon="mdi-lock" label="Повторите пароль" :type="showPassword2 ? 'text' : 'password'" :rules="confirmPasswordRules" v-model="passwordRepeat" :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword2 = !showPassword2")
+              v-text-field(prepend-icon="mdi-account" label="Электронная почта" type="text"  v-model="email" :rules="emailRules" :counter="35" @keyup.enter="registration")
+              v-text-field(prepend-icon="mdi-lock" label="Пароль" :type="showPassword1 ? 'text' : 'password'" :rules="passwordRules" :counter="20" @keyup.enter="registration" v-model="password" :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword1 = !showPassword1")
+              v-text-field(prepend-icon="mdi-lock" label="Повторите пароль" :type="showPassword2 ? 'text' : 'password'" :rules="confirmPasswordRules" @keyup.enter="registration" v-model="passwordRepeat" :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword2 = !showPassword2")
           v-card-actions
             div.mx-auto(justify="center" align="center")
               v-spacer
